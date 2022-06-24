@@ -2,13 +2,16 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
-
+import state from "./store";
 import routes from "./routes";
 import VueRouter from "vue-router";
+ 
 Vue.use(VueRouter);
 const router = new VueRouter({
   routes,
 });
+
+axios.defaults.withCredentials = true;
 
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
@@ -24,8 +27,10 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  AvatarPlugin,
 } from "bootstrap-vue";
 [
+  AvatarPlugin,
   FormGroupPlugin,
   FormPlugin,
   FormInputPlugin,
@@ -67,6 +72,7 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
 const shared_data = {
+  server_domain:  "http://localhost:3000",
   username: localStorage.username,
   login(username) {
     localStorage.setItem("username", username);
@@ -78,6 +84,48 @@ const shared_data = {
     localStorage.removeItem("username");
     this.username = undefined;
   },
+    
+async produceUserData() {
+  await this.setUserFavorites();
+  await this.setUserLastWatched();
+  await this.setUserRecipes();
+},
+
+async setUserFavorites() {
+  try {
+    const favoriteResponse = await axios.get(
+      this.server_domain + "/users/favorites"
+    );
+    console.log(favoriteResponse.data)
+    localStorage.setItem("userFavoriteRecipes", JSON.stringify(favoriteResponse.data));
+    console.log(JSON.parse(localStorage.getItem("userFavoriteRecipes")));
+  } catch (error) {
+    console.log(error);
+  }
+},
+
+async setUserLastWatched() {
+  try {
+    const lastWatchedResponse = await axios.get(
+      this.server_domain + "/users/last_watched"
+    );
+    localStorage.setItem("userLastWatched", JSON.stringify(lastWatchedResponse.data));
+  } catch (error) {
+    console.log(error);
+  }
+},
+
+async setUserRecipes() {
+  try {
+    const userRecipesResponse = await axios.get(
+      this.server_domain + "/users/my_recipes"
+    );
+    console.log(userRecipesResponse.data)
+    localStorage.setItem("userRecipes", JSON.stringify(userRecipesResponse.data));
+  } catch (error) {
+    console.log(error);
+  }
+},
 };
 console.log(shared_data);
 // Vue.prototype.$root.store = shared_data;

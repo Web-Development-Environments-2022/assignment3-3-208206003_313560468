@@ -94,9 +94,11 @@ export default {
     async Login() {
       try {
         const response = await this.axios.post(
-          "https://test-for-3-2.herokuapp.com/user/Login",
+          // "https://test-for-3-2.herokuapp.com/user/Login",
+           "http://localhost:3000/login",
+
           {
-            username: this.form.username,
+            user_name: this.form.username,
             password: this.form.password
           }
         );
@@ -104,6 +106,7 @@ export default {
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
+        await this.$root.store.produceUserData();
         this.$router.push("/");
       } catch (err) {
         console.log(err.response);
