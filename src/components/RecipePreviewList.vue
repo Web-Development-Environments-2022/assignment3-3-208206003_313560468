@@ -53,12 +53,14 @@ export default {
   methods: {
     async updateRecipes() {
       if (this.random) {
-        // try{
-        //   const randomResponse = await this.axios.get(this.$root.store.server_domain + "/recipes/random")
-        //   this.recipes = randomResponse.data;
-        // } catch (error) {
-        //   console.log(error);
-        // }
+      //   try{
+      //     const randomResponse = await this.axios.get(this.$root.store.server_domain + "/recipes/random")
+      //     this.recipes = randomResponse.data;
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+
+      //   }
         this.recipes = [{
           vegetarian: true,
           vegan: true,
