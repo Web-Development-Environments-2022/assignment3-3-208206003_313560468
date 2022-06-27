@@ -1,9 +1,10 @@
 <template>
+<div>
+    <h1 class="title" v-if="!$root.store.username">Registration Page </h1>
   <div v-if="$root.store.username">
     <NotFound></NotFound>
   </div>
   <div v-else class="container">
-    <h1 class="title">Register</h1>
     <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
       <b-form-group
         id="input-group-username"
@@ -160,15 +161,18 @@
       <b-button type="reset" variant="danger">Reset</b-button>
       <b-button
         type="submit"
-        variant="primary"
-        style="width: 250px"
+        
+        style="width: 250px; background-color: green;"
         class="ml-5 w-75"
         >Register</b-button
       >
-      <div class="mt-2">
-        You have an account already?
-        <router-link to="login"> Log in here</router-link>
-      </div>
+    <div id="registerRequest" style="text-align: center; padding-left: 100px; padding-top: 5px;" >
+      <h2 style="color:white"> Do not have an account yet?</h2>
+      <b-button  style="max-width: 100px; background-color: blue;">
+        <router-link to="Login" style="color: white;"> Login</router-link>
+      </b-button>
+    
+    </div>
     </b-form>
     <b-alert
       class="mt-2"
@@ -183,6 +187,7 @@
       <pre class="m-0"><strong>form:</strong> {{ form }}</pre>
       <pre class="m-0"><strong>$v.form:</strong> {{ $v.form }}</pre>
     </b-card> -->
+  </div>
   </div>
 </template>
 
@@ -314,5 +319,14 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 500px;
+}
+h2{
+  font-size: 15px;
+}
+h1 {
+
+  color: rgb(248, 248, 217);
+  font-family: Frank Ruhl Libre, Georgia;
+
 }
 </style>

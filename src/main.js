@@ -5,6 +5,7 @@ import axios from "axios";
 import state from "./store";
 import routes from "./routes";
 import VueRouter from "vue-router";
+
 Vue.use(VueRouter);
 const router = new VueRouter({
   routes,
@@ -16,6 +17,7 @@ import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import {
+  IconsPlugin,
   FormGroupPlugin,
   FormPlugin,
   FormInputPlugin,
@@ -35,6 +37,7 @@ import {
   FormTextareaPlugin,
 } from "bootstrap-vue";
 [
+  IconsPlugin,
   FormGroupPlugin,
   FormPlugin,
   FormInputPlugin,
@@ -114,8 +117,8 @@ const shared_data = {
     //     this.server_domain + "/users/favorites"
     //   );
     //   let favorites = favoriteResponse.data;
-      try{
-      let favorites= [{
+    try {
+      let favorites = [{
         vegetarian: false,
         vegan: true,
         glutenFree: true,
@@ -148,7 +151,7 @@ const shared_data = {
         id: 14445,
         popularity: 35,
       },
-    ];
+      ];
       for (let i = 0; i < favorites.length; i++) {
         favorites[i].favorite = true;
       }
@@ -163,48 +166,48 @@ const shared_data = {
   },
 
   async setUserLastWatched() {
-    // try {
-    //   const lastWatchedResponse = await axios.get(
-    //     this.server_domain + "/users/last_watched"
-    //   );
-    try{
-    let lastWatchedResponse= [{
-      vegetarian: false,
-      vegan: true,
-      glutenFree: true,
-      title: "Dandelion pesto",
-      readyInMinutes: 45,
-      servings: 4,
-      image: "https://spoonacular.com/recipeImages/641227-556x370.jpg",
-      id: 18,
-      popularity: 15,
-    },
-    {
-      vegetarian: false,
-      vegan: false,
-      glutenFree: true,
-      title: "Homemade Broccoli Cheddar Soup",
-      readyInMinutes: 45,
-      servings: 6,
-      image: "https://spoonacular.com/recipeImages/646930-556x370.jpg",
-      id: 100,
-      popularity: 20,
-    },
-    {
-      vegetarian: true,
-      vegan: false,
-      glutenFree: true,
-      title: "Tart Raspberry Sorbet with a Hint of Heat",
-      readyInMinutes: 45,
-      servings: 1,
-      image: "https://spoonacular.com/recipeImages/716198-556x370.jpg",
-      id: 14445,
-      popularity: 35,
-    },
-  ];
+    try {
+      const lastWatchedResponse = await axios.get(
+        this.server_domain + "/users/last_watched"
+      );
+      //   try{
+      //   let lastWatchedResponse= [{
+      //     vegetarian: false,
+      //     vegan: true,
+      //     glutenFree: true,
+      //     title: "Dandelion pesto",
+      //     readyInMinutes: 45,
+      //     servings: 4,
+      //     image: "https://spoonacular.com/recipeImages/641227-556x370.jpg",
+      //     id: 18,
+      //     popularity: 15,
+      //   },
+      //   {
+      //     vegetarian: false,
+      //     vegan: false,
+      //     glutenFree: true,
+      //     title: "Homemade Broccoli Cheddar Soup",
+      //     readyInMinutes: 45,
+      //     servings: 6,
+      //     image: "https://spoonacular.com/recipeImages/646930-556x370.jpg",
+      //     id: 100,
+      //     popularity: 20,
+      //   },
+      //   {
+      //     vegetarian: true,
+      //     vegan: false,
+      //     glutenFree: true,
+      //     title: "Tart Raspberry Sorbet with a Hint of Heat",
+      //     readyInMinutes: 45,
+      //     servings: 1,
+      //     image: "https://spoonacular.com/recipeImages/716198-556x370.jpg",
+      //     id: 14445,
+      //     popularity: 35,
+      //   },
+      // ];
       localStorage.setItem(
         "userLastWatched",
-        JSON.stringify(lastWatchedResponse.data.slice(0,3))
+        JSON.stringify(lastWatchedResponse.data.slice(0, 3))
       );
     } catch (error) {
       console.log(error);
@@ -232,7 +235,7 @@ const shared_data = {
       if (localStorage.getItem("userFavoriteRecipes") != undefined) {
         favorites = JSON.parse(localStorage.getItem("userFavoriteRecipes"));
       }
-      
+
       favorites.unshift(recipe);
       localStorage.setItem("userFavoriteRecipes", JSON.stringify(favorites));
       await axios.post(
@@ -251,13 +254,13 @@ const shared_data = {
     if (localStorage.getItem("userLastWatched") != undefined) {
       lastWatched = JSON.parse(localStorage.getItem("userLastWatched"));
     }
-    for(var i = 0;i<lastWatched.length;i++){
-      if(recipe.id == lastWatched[i].id){
-          return;
+    for (let i = 0; i < lastWatched.length; i++) {
+      if (recipe.id === lastWatched[i].id) {
+        return;
       }
     }
     lastWatched.unshift(recipe);
-    localStorage.setItem("userLastWatched", JSON.stringify(lastWatched.slice(0,3)))
+    localStorage.setItem("userLastWatched", JSON.stringify(lastWatched.slice(0, 3)))
   },
 
 

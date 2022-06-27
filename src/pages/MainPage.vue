@@ -3,29 +3,39 @@
     <div class="neon-text">Liroey Recipes</div>
     <div>
       <RecipePreviewList
-        title="Random Recipes"
+        title=""
         :random="true"
         :key="rerender"
-        :logged_in = "!!$root.store.username"
+        :logged_in = "Boolean($root.store.username)"
         class="RandomRecipes center"
       />
       <div style="text-align: center; margin-top: 30px">
         <b-avatar
           button
           @click="randomRecipes"
-          variant="info"
-          src="https://cdn4.iconfinder.com/data/icons/cooking-technique/32/Artboard_4-512.png"
+          variant="tranparent"
+          :src="require('@/assets/shuffle.png')"
           size="5em"
           style="text-align: center"
         ></b-avatar>
       </div>
     </div>
-    <router-link v-if="!$root.store.username" to="/login" tag="button"
-      >You need to Login to vue this</router-link
-    >
-    {{ !$root.store.username }}
+    <h1> Last Viewed Recipes:</h1>
+
+    <div id="membershipRequest" style="text-align: left; margin-right: 50%;" >
+      <h3> Only members can see that</h3>
+      <b-button  style="max-width: 100px; background-color: blue;">
+        <router-link to="login" style="color: white;"> Login</router-link>
+      </b-button>
+      <b-button  style="max-width: 100px; background-color: green;">
+        <router-link to="register" style="color: white; "> Join us !</router-link>
+      </b-button>
+    
+    </div>
+    
+
     <RecipePreviewList
-      title="Last Viewed Recipes"
+      title=""
       :class="{
         RandomRecipes: true,
         blur: !$root.store.username,
@@ -138,5 +148,11 @@ header:before {
   left: 50px;
   background: #fff;
   padding: 0 20px;
+}
+h3{
+  font-size: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  font-style:italic;
+  font-weight: bolder;
 }
 </style>

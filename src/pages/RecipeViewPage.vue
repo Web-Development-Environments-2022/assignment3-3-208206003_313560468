@@ -15,7 +15,7 @@
         font-family: Frank Ruhl Libre, Georgia;
         border-radius: 10px;
       " class="mb-4">
-        <h5 style="font-size: 40px;  text-align: center;"> <strong> {{ recipe.title }}</strong></h5>
+        <h1 style="font-size: 40px;  text-align: center;"> <strong> {{ recipe.title }}</strong></h1>
         <!-- <div class="mb-4" style="text-align: left;">
           <h1><strong style="font-size: 40px; padding-top: 0px;">{{ recipe.title }}</strong></h1> <br>
         </div> -->
@@ -60,24 +60,26 @@
       </b-card>
     </b-card-group>
 
-    <b-card-group deck style="text-align: left">
-      <b-card :img-src="require('@/assets/ingredients.png')" img-alt="Image" img-top title="Ingredients" sub-title="All you need is :" style="background-image:url('https://static.vecteezy.com/system/resources/previews/002/677/456/large_2x/white-grey-cement-concrete-textured-background-soft-natural-wall-backdrop-for-aesthetic-creative-design-free-photo.jpg');
+    <b-card-group deck style="text-align: center">
+      <b-card style="background-image:url('https://media.gettyimages.com/photos/herbs-and-spices-over-black-stone-background-picture-id589135154?b=1&k=20&m=589135154&s=170667a&w=0&h=MuYiqZW2zMeoU_r7QN0u0c-FFQEWsW3WFfPL0dMibXs=');
         background-repeat: no-repeat; background-size: cover; 
-        text-align: center; max-width: 35%; border-radius: 10px;">
-
+        text-align: center; max-width: 35%; border-radius: 10px; padding-bottom: 20px;">
+        <h1> Ingredients </h1>
         <b-card-text style="text-align: center;">
-          <strong v-for="r in recipe.ingredients" :key="r" style="display: list-item">{{ r }}
-          </strong>
+          <v-list-item-content> <strong id="List" v-for="r in recipe.ingredients" :key="r"
+              style="display:list-item; color: white; text-align: left; padding-bottom: 7px;"> {{ r }} </strong>
+          </v-list-item-content>
+
         </b-card-text>
 
         <a href="#" class="card-link">Check how it looks when done</a>
         <!-- <b-link href="#" class="card-link">Another link</b-link> -->
       </b-card>
-      <b-card title="Instructions" sub-title="Le'ts Start"
-        style="background-image: url('https://static.vecteezy.com/system/resources/previews/002/677/456/large_2x/white-grey-cement-concrete-textured-background-soft-natural-wall-backdrop-for-aesthetic-creative-design-free-photo.jpg');
+      <b-card style="background-image: url('https://media.gettyimages.com/photos/herbs-and-spices-over-black-stone-background-picture-id589135154?b=1&k=20&m=589135154&s=170667a&w=0&h=MuYiqZW2zMeoU_r7QN0u0c-FFQEWsW3WFfPL0dMibXs=');background-repeat: no-repeat; background-size: cover;
         text-align: center;  max-width: 65%; border-radius: 10px;">
+        <h1> Instructions </h1>
         <b-card-text style="text-align: center;">
-          <strong> {{ recipe.instructions }} </strong>
+          <strong style="color: white;"> {{ recipe.instructions }} </strong>
         </b-card-text>
         <a href="#" class="card-link">Check how it looks when done</a>
         <!-- <b-link href="#" class="card-link">Another link</b-link> -->
@@ -98,83 +100,48 @@ export default {
     };
   },
   async created() {
-    console.log(this.$route.params.user_recipe);
-    // try {
-    //   let response;
-    //   // response = this.$route.params.response;
-    //   if (!this.$route.params.user_recipe) {
-    //     try {
-    //       response = await this.axios.get(
-    //         this.$root.store.server_domain +
-    //           "/recipes/details/" +
-    //           this.$route.params.recipeId
-    //       );
-    //       // console.log("response.status", response.status);
-    //       if (response.status !== 200) this.$router.replace("/NotFound");
-    //     } catch (error) {
-    //       console.log("error.response.status", error.response.status);
-    //       this.$router.replace("/NotFound");
-    //       return;
-    //     }
-    //   } else {
-    //     try {
-    //       response = await this.axios.get(
-    //         this.$root.store.server_domain +
-    //           "/users/my_recipe/" +
-    //           this.$route.params.recipeId
-    //       );
-    //       // console.log("response.status", response.status);
-    //       if (response.status !== 200) this.$router.replace("/NotFound");
-    //     } catch (error) {
-    //       console.log("error.response.status", error.response.status);
-    //       this.$router.replace("/NotFound");
-    //       return;
-    //     }
-    //   }
+    let response;
     try {
-      let responseData = {
-        instructions: "Asdasdasdasda",
-        ingredients: ["put 1 salt", "put 2 hara", "add 3 cosemek", "yesh leha banana aba?"],
-        popularity: 3,
-        readyInMinutes: 40,
-        image: "https://www.seriouseats.com/thmb/DeOzmC_A8yHIiCLo2KCcUfedwv4=/1500x844/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__2020__03__20200224-carretteira-pasta-vicky-wasik-21-ffe68515b25f4b348cbde845a59d6a62.jpg",
-        title: "ze shelanu aba",
-        vegan: true,
-        vegetarian: true,
-        glutenFree: true,
-        servings: 5
-
-      };
-      let { instructions, ingredients, popularity, readyInMinutes, image, title, vegan, vegetarian, glutenFree, servings } = responseData;
-      // let _instructions = analyzedInstructions
-      //   .map((fstep) => {
-      //     fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-      //     return fstep.steps;
-      //   })
-      //   .reduce((a, b) => [...a, ...b], []);
-      // if (this.$route.params.user_recipe) {
-      //   image =
-      //     this.$root.store.server_domain + "/users/download?image=" + image;
-      // }
-      let _recipe = {
-        instructions,
-        ingredients,
-        popularity,
-        readyInMinutes,
-        image,
-        title,
-        vegan,
-        vegetarian,
-        glutenFree,
-        servings
-      };
-      this.recipe = _recipe;
-      if (!this.$route.params.user_recipe) {
-        this.$root.store.addToUserLastWatched(this.recipe);
-      }
+      response = await this.axios.get(
+        this.$root.store.server_domain +
+        "/recipes/details/" +
+        this.$route.params.recipeId
+      );
+    } catch (error) {
+      console.log("error.response.status", error.response.status);
+      this.$router.replace("/NotFound");
+      return;
     }
-    catch (error) {
-      console.log(error);
+    // try {
+    //   let responseData = {
+    //     instructions: "Asdasdasdasda",
+    //     ingredients: ["put 1 salt", "put 2 hara", "add 3 cosemek", "yesh leha banana aba?"],
+    //     popularity: 3,
+    //     readyInMinutes: 40,
+    //     image: "https://www.seriouseats.com/thmb/DeOzmC_A8yHIiCLo2KCcUfedwv4=/1500x844/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__2020__03__20200224-carretteira-pasta-vicky-wasik-21-ffe68515b25f4b348cbde845a59d6a62.jpg",
+    //     title: "ze shelanu aba",
+    //     vegan: true,
+    //     vegetarian: true,
+    //     glutenFree: true,
+    //     servings: 5
+
+    //   };
+    let { instructions, ingredients, popularity, readyInMinutes, image, title, vegan, vegetarian, glutenFree, servings } = response.data;
+    let _recipe = {
+      instructions,
+      ingredients,
+      popularity,
+      readyInMinutes,
+      image,
+      title,
+      vegan,
+      vegetarian,
+      glutenFree,
+      servings
+    };
+    this.recipe = _recipe;
+    if (!this.$route.params.user_recipe) {
+      this.$root.store.addToUserLastWatched(this.recipe);
     }
   },
   components: { NotFoundPage }
@@ -204,18 +171,13 @@ export default {
 h1 {
   padding-top: 25px;
   padding-left: 25px;
-  color: white;
+  color: rgb(248, 248, 217);
   font-family: Frank Ruhl Libre, Georgia;
 
 }
 
-h5 {
-  padding-top: 25px;
-  padding-left: 25px;
-  color: rgb(243, 223, 174);
-  font-family: Frank Ruhl Libre, Georgia;
 
-}
+
 
 /* .recipe-header{
 

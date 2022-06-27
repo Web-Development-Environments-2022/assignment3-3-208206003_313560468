@@ -10,7 +10,7 @@
         title="Favourites Recipes"
         :inRecipes="favoriteRecipes"
         :random="false"
-        :logged_in = "root.store.username"
+        :logged_in = "Boolean($root.store.username)"
         class="center"
       />
     </div>

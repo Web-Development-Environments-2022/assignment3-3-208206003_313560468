@@ -17,7 +17,7 @@
                 <h2> Search</h2>
               </router-link>
             </b-nav-item>
-            <!-- Add route to About page -->
+            
             <b-nav-item href="#">
               <router-link :to="{ name: 'about' }">
                 <h2> About Us </h2>
@@ -70,18 +70,18 @@
                   <b-form-input :state="Boolean(ingredient.value)" v-model="ingredient.value" required
                     placeholder="Ingredient" class="mb-2 mr-sm-2 mb-sm-0"></b-form-input>
                 </b-form-group>
-                <br />
-                <b-avatar button @click="addIngredient" variant="info"
-                  src="https://cdn4.iconfinder.com/data/icons/cooking-technique/32/Artboard_4-512.png" size="5em"
+                <b-avatar button @click="addIngredient" variant="transparent"
+                  :src="require('@/assets/plus.png')" size="2em"
                   style="text-align: center"></b-avatar>
-                <b-avatar button @click="removeIngredient" variant="info"
-                  src="https://cdn4.iconfinder.com/data/icons/cooking-technique/32/Artboard_4-512.png" size="5em"
+                <b-avatar button @click="removeIngredient" variant="transparent"
+                  :src="require('@/assets/minus.png')" size="2em"
                   style="text-align: center"></b-avatar>
+
                 <br /><br />
                 <strong>Instructions:</strong>
                 <b-form-group :state="Boolean(form.instructions)" invalid-feedback="*">
                   <b-form-textarea :state="
-                    Boolean(form.instructions.length <= 1000) &&
+                    Boolean(form.instructions.length <= 2000) &&
                     Boolean(form.instructions)
                   " id="instructions" v-model="form.instructions" placeholder="Enter instructions..." rows="6"
                     max-rows="8" required></b-form-textarea>
@@ -122,7 +122,7 @@
     </div>
     <!-- The nevigation bar when no user is logged in -->
     <div v-else>
-      <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar toggleable="lg" type="dark" variant="dark">
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
@@ -144,25 +144,20 @@
             </b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
-            <span v-if="!$root.store.username">
-              <b-nav-item id="hellowGuest">
-                <h2> Hellow Guest </h2>
-              </b-nav-item>
-            </span>
-            <span v-if="!$root.store.username">
-              <b-nav-item href="#" id="register">
-                <router-link :to="{ name: 'register' }">
-                  <h2> Hellow Guest </h2>
-                </router-link>
-              </b-nav-item>
-            </span>
-            <span v-if="!$root.store.username">
-              <b-nav-item href="#" id="login">
+            <b-nav-item id="hellowGuest">
+              <h2> Hellow Guest </h2>
+            </b-nav-item>
+            <b-nav-item href="#" id="register">
+              <router-link :to="{ name: 'register' }">
+                <h2> Register </h2>
+              </router-link>
+            </b-nav-item>
+            <b-nav-item href="#" id="login">
                 <router-link :to="{ name: 'login' }">
                   <h2> Login </h2>
                 </router-link>
-              </b-nav-item>
-            </span>
+            </b-nav-item>
+           
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -266,7 +261,8 @@ h2 {
   font-size: 18px;
   font-family: Frank Ruhl Libre, Georgia;
 }
-h3{
+
+h3 {
   font-size: 20px;
   font-family: Frank Ruhl Libre, Georgia;
 }
