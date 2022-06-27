@@ -22,46 +22,46 @@
         >
           <div class="mb-4">
             <b-avatar
-              variant="light"
+              variant="transparent"
               src="https://www.pngall.com/wp-content/uploads/8/Vegan-Transparent.png"
               size="3.5em"
               style="display: "
             ></b-avatar>
             <b-avatar
               v-if="recipe.vegetarian"
-              variant="light"
+              variant="transparent"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM01sSL71L6crZ2k__oG2cKWGzov4-vYS2xwmG6SvYC05zJaum0OarEV2oG0w2T_BqhcQ&usqp=CAU"
               size="3.8em"
             ></b-avatar>
             <slot></slot>
             <b-avatar
               v-if="recipe.glutenFree"
-              variant="light"
+              variant="transparent"
               src="https://static.wixstatic.com/media/179523_cbcc13ff55ac449c84c366db1f767fd9~mv2.png/v1/fill/w_300,h_300,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/1772008_1.png"
               size="4em"
             ></b-avatar>
           </div>
           <div class="mb-4">
             <b-avatar
-              variant="light"
+              variant="transparent"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfF0qGfmgFsf0E2ycAhkP6gcuZ05AAutJUzw&usqp=CAU"
               size="2em"
             ></b-avatar>
             {{ recipe.readyInMinutes }} minutes
             <b-avatar
-              variant="light"
+              variant="transparent"
               src="https://cdn-icons-png.flaticon.com/512/1046/1046874.png"
               size="2em"
             ></b-avatar>
             {{ recipe.servings }} people <br /><br />
             <b-avatar
-              variant="light"
+              variant="transparent"
               src="https://banner2.cleanpng.com/20180616/ccf/kisspng-thumb-signal-computer-icons-like-icon-5b24ba2679a3b8.7819004915291336064983.jpg"
               size="2em"
             ></b-avatar>
             {{ recipe.popularity }} likes
             <b-avatar v-if="watched"
-              variant="light"
+              variant="transparent"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-mIy8PoSlI5ATokKUgHZVXKVF9GTTgg7vCw&usqp=CAU"
               size="2em"
               style="margin-left: auto"

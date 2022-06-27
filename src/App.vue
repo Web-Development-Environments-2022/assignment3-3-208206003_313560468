@@ -44,7 +44,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
-  background-image: url("https://ae01.alicdn.com/kf/HTB1P5olXUT1gK0jSZFrq6ANCXXaw/-.jpg");
+  background-image: url("https://img.freepik.com/free-photo/korean-fish-cake-vegetable-soup-table_1150-42982.jpg?w=2000");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
