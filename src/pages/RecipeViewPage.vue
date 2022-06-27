@@ -5,24 +5,26 @@
   <div class="container" v-else>
 
     <b-card-group deck style="text-align: center">
-      <b-card :img-src="recipe.image" img-alt="Image" img-width="200" img-top tag="article" style="
+      <b-card :img-src="recipe.image" img-alt="Image" img-height="420" img-width="200" img-top tag="article" style="
         max-width: 65%;
         /* height: 33rem; */
         height: 15rem;
-        
+        background-image:url('https://static.vecteezy.com/system/resources/previews/002/677/456/large_2x/white-grey-cement-concrete-textured-background-soft-natural-wall-backdrop-for-aesthetic-creative-design-free-photo.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
         font-family: Frank Ruhl Libre, Georgia;
         border-radius: 10px;
       " class="mb-4">
-
-        <div class="mb-4" style="text-align: center;">
-          <strong style="font-size: 30px">{{ recipe.title }}</strong> <br>
-        </div>
+        <h5 style="font-size: 40px;  text-align: center;"> <strong> {{ recipe.title }}</strong></h5>
+        <!-- <div class="mb-4" style="text-align: left;">
+          <h1><strong style="font-size: 40px; padding-top: 0px;">{{ recipe.title }}</strong></h1> <br>
+        </div> -->
       </b-card>
       <b-card style="
         max-width: 35%;
         /* height: 33rem; */
         max-height: 5rem;
-        background-image: url('https://i.pinimg.com/originals/a3/39/55/a33955a3b991d0765b4a734cd9f99019.jpg');
+        background-image: url('https://ae01.alicdn.com/kf/HTB1ZcZVaOnrK1RjSsziq6xptpXan/-.jpg_Q90.jpg_.webp');
         background-repeat: no-repeat;
         background-size: cover;
         
@@ -32,32 +34,25 @@
 
         <div class="mb-4" style="text-align: center; padding-left: 15px;">
           <b-row>
-            
-            <b-avatar id="vegan" v-if="recipe.vegan" variant="transparent" 
-              src="https://www.pngall.com/wp-content/uploads/8/Vegan-Transparent.png" size="7em" style="display:" />
-            <b-avatar  id="vegetarian" v-if="recipe.vegetarian" variant="transparent"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM01sSL71L6crZ2k__oG2cKWGzov4-vYS2xwmG6SvYC05zJaum0OarEV2oG0w2T_BqhcQ&usqp=CAU"
-              size="7em" />
+            <b-avatar id="vegetarian" v-if="recipe.vegetarian" variant="transparent"
+              :src="require('@/assets/vegetarian.png')" size="7em" />
+            <b-avatar id="vegan" v-if="recipe.vegan" variant="transparent" :src="require('@/assets/vegan.png')"
+              size="7em" style="display:" />
             <b-avatar id="glutenFree" v-if="recipe.glutenFree" variant="transparent"
-              src="https://static.wixstatic.com/media/179523_cbcc13ff55ac449c84c366db1f767fd9~mv2.png/v1/fill/w_300,h_300,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/1772008_1.png"
-              size="7em" />
+              :src="require('@/assets/glutenFree.png')" size="7em" />
           </b-row><br>
           <b-row>
-            <b-avatar variant="transparent" src="https://cdn-icons-png.flaticon.com/512/1046/1046874.png" size="7em" />
-          
+            <b-avatar variant="transparent" :src="require('@/assets/servings.png')" size="7em" />
+
             <h1>{{ recipe.servings }} people</h1>
           </b-row>
           <br>
           <b-row>
-            <b-avatar variant="transparent"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfF0qGfmgFsf0E2ycAhkP6gcuZ05AAutJUzw&usqp=CAU"
-              size="7em"></b-avatar>
+            <b-avatar variant="transparent" :src="require('@/assets/time.png')" size="7em"></b-avatar>
             <h1>{{ recipe.readyInMinutes }} minutes</h1>
           </b-row><br>
           <b-row>
-            <b-avatar variant="transparent"
-              src="https://banner2.cleanpng.com/20180616/ccf/kisspng-thumb-signal-computer-icons-like-icon-5b24ba2679a3b8.7819004915291336064983.jpg"
-              size="7em"></b-avatar>
+            <b-avatar variant="transparent" :src="require('@/assets/like.png')" size="7em"></b-avatar>
             <h1>{{ recipe.popularity }} likes</h1>
           </b-row>
 
@@ -65,9 +60,10 @@
       </b-card>
     </b-card-group>
 
-    <div class="Cards">
-      <b-card title="Ingredients" sub-title="All you need is :"
-        style="background-image: url('//www.myalbum.co.il/wp-content/uploads/2019/03/%D7%9E%D7%AA%D7%9B%D7%95%D7%A0%D7%99%D7%9D.jpg');text-align: center;">
+    <b-card-group deck style="text-align: left">
+      <b-card :img-src="require('@/assets/ingredients.png')" img-alt="Image" img-top title="Ingredients" sub-title="All you need is :" style="background-image:url('https://static.vecteezy.com/system/resources/previews/002/677/456/large_2x/white-grey-cement-concrete-textured-background-soft-natural-wall-backdrop-for-aesthetic-creative-design-free-photo.jpg');
+        background-repeat: no-repeat; background-size: cover; 
+        text-align: center; max-width: 35%; border-radius: 10px;">
 
         <b-card-text style="text-align: center;">
           <strong v-for="r in recipe.ingredients" :key="r" style="display: list-item">{{ r }}
@@ -77,23 +73,16 @@
         <a href="#" class="card-link">Check how it looks when done</a>
         <!-- <b-link href="#" class="card-link">Another link</b-link> -->
       </b-card>
-      <br><br><br>
-    </div>
-    <div class="Cards">
       <b-card title="Instructions" sub-title="Le'ts Start"
-        style="background-image: url('//www.myalbum.co.il/wp-content/uploads/2019/03/%D7%9E%D7%AA%D7%9B%D7%95%D7%A0%D7%99%D7%9D.jpg');text-align: center;">
+        style="background-image: url('https://static.vecteezy.com/system/resources/previews/002/677/456/large_2x/white-grey-cement-concrete-textured-background-soft-natural-wall-backdrop-for-aesthetic-creative-design-free-photo.jpg');
+        text-align: center;  max-width: 65%; border-radius: 10px;">
         <b-card-text style="text-align: center;">
           <strong> {{ recipe.instructions }} </strong>
-
         </b-card-text>
-
         <a href="#" class="card-link">Check how it looks when done</a>
         <!-- <b-link href="#" class="card-link">Another link</b-link> -->
       </b-card>
-    </div>
-
-
-
+    </b-card-group>
   </div>
 </template> 
 
@@ -148,7 +137,7 @@ export default {
         ingredients: ["put 1 salt", "put 2 hara", "add 3 cosemek", "yesh leha banana aba?"],
         popularity: 3,
         readyInMinutes: 40,
-        image: "https://spoonacular.com/recipeImages/1-556x370.jpg",
+        image: "https://www.seriouseats.com/thmb/DeOzmC_A8yHIiCLo2KCcUfedwv4=/1500x844/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__2020__03__20200224-carretteira-pasta-vicky-wasik-21-ffe68515b25f4b348cbde845a59d6a62.jpg",
         title: "ze shelanu aba",
         vegan: true,
         vegetarian: true,
@@ -215,6 +204,17 @@ export default {
 h1 {
   padding-top: 25px;
   padding-left: 25px;
+  color: white;
+  font-family: Frank Ruhl Libre, Georgia;
+
+}
+
+h5 {
+  padding-top: 25px;
+  padding-left: 25px;
+  color: rgb(243, 223, 174);
+  font-family: Frank Ruhl Libre, Georgia;
+
 }
 
 /* .recipe-header{
