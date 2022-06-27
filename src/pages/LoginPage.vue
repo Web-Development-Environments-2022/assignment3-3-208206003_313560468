@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div v-if="$root.store.username">
+    <NotFound></NotFound>
+  </div>
+  <div v-else class="container">
     <h1 class="title">Login</h1>
     <b-form @submit.prevent="onLogin">
       <b-form-group
@@ -39,7 +42,7 @@
       <b-button
         type="submit"
         variant="primary"
-        style="width:100px;display:block;"
+        style="width: 100px; display: block"
         class="mx-auto w-100"
         >Login</b-button
       >
@@ -61,30 +64,35 @@
       <pre class="m-0">{{ form }}</pre>
     </b-card> -->
   </div>
+  
 </template>
 
 <script>
 import { required } from "vuelidate/lib/validators";
+import NotFound from "../pages/NotFoundPage";
 export default {
+  components: {
+    NotFound,
+  },
   name: "Login",
   data() {
     return {
       form: {
         username: "",
         password: "",
-        submitError: undefined
-      }
+        submitError: undefined,
+      },
     };
   },
   validations: {
     form: {
       username: {
-        required
+        required,
       },
       password: {
-        required
-      }
-    }
+        required,
+      },
+    },
   },
   methods: {
     validateState(param) {
@@ -94,19 +102,18 @@ export default {
     async Login() {
       try {
         const response = await this.axios.post(
-          // "https://test-for-3-2.herokuapp.com/user/Login",
-           "http://localhost:3000/login",
-
+          this.$root.store.server_domain + "/login",
           {
             user_name: this.form.username,
-            password: this.form.password
+            password: this.form.password,
           }
         );
         // console.log(response);
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
-        this.$root.store.login(this.form.username);
+        
         await this.$root.store.produceUserData();
+        this.$root.store.login(this.form.username);
         this.$router.push("/");
       } catch (err) {
         console.log(err.response);
@@ -123,8 +130,8 @@ export default {
       // console.log("login method go");
 
       this.Login();
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

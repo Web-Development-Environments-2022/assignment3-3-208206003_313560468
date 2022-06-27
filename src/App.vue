@@ -1,11 +1,22 @@
 <template>
   <div id="app">
-      <NavBar :logout="Logout"></NavBar>
-      <router-view />
-    </div>
+    <!-- <div id="nav">
+      <router-link :to="{ name: 'main' }">Vue Recipes</router-link>|
+      <router-link :to="{ name: 'search' }">Search</router-link>|
+      {{ !$root.store.username }}
+      <span v-if="!$root.store.username">
+        Guest:
+        <router-link :to="{ name: 'register' }">Register</router-link>|
+        <router-link :to="{ name: 'login' }">Login</router-link>|
+      </span>
+      <span v-else>
+        {{ $root.store.username }}: <button @click="Logout">Logout</button>|
+      </span>
+    </div> -->
+    <NavBar :logout="Logout"></NavBar>
+    <router-view />
+  </div>
 </template>
-
-
 
 <script>
 import NavBar from "./components/NavBar.vue";
@@ -18,9 +29,9 @@ export default {
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
-    }
+    },
   },
-  components: { NavBar }
+  components: { NavBar },
 };
 </script>
 
@@ -37,7 +48,6 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-
 }
 
 #nav {

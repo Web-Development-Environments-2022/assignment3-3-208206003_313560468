@@ -1,82 +1,95 @@
 <template>
-  <router-link
-    style="text-decoration: none; color: inherit"
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-    ><div>
-      <b-card
-        :img-src="recipe.image"
-        :title="recipe.title"
-        img-alt="Image"
-        img-top
-        tag="article"
-        style="
-          max-width: 20rem;
-          height: 31rem;
-          font-family: Frank Ruhl Libre, Georgia;
-        "
-        class="mb-4"
-      >
-        <div class="mb-4">
-          <b-avatar
-            variant="light"
-            src="https://www.pngall.com/wp-content/uploads/8/Vegan-Transparent.png"
-            size="3.5em"
-            style="display: "
-          ></b-avatar>
-          <b-avatar
-            v-if="recipe.vegetarian"
-            variant="light"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM01sSL71L6crZ2k__oG2cKWGzov4-vYS2xwmG6SvYC05zJaum0OarEV2oG0w2T_BqhcQ&usqp=CAU"
-            size="3.8em"
-          ></b-avatar>
-          <slot></slot>
-          <b-avatar
-            v-if="recipe.glutenFree"
-            variant="light"
-            src="https://static.wixstatic.com/media/179523_cbcc13ff55ac449c84c366db1f767fd9~mv2.png/v1/fill/w_300,h_300,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/1772008_1.png"
-            size="4em"
-          ></b-avatar>
-        </div>
-        <div class="mb-4">
-          <b-avatar
-            variant="light"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfF0qGfmgFsf0E2ycAhkP6gcuZ05AAutJUzw&usqp=CAU"
-            size="2em"
-          ></b-avatar>
-          {{ recipe.readyInMinutes }} minutes
-          <b-avatar
-            variant="light"
-            src="https://cdn-icons-png.flaticon.com/512/1046/1046874.png"
-            size="2em"
-          ></b-avatar>
-          {{ recipe.servings }} people <br /><br />
-          <b-avatar
-            variant="light"
-            src="https://banner2.cleanpng.com/20180616/ccf/kisspng-thumb-signal-computer-icons-like-icon-5b24ba2679a3b8.7819004915291336064983.jpg"
-            size="2em"
-          ></b-avatar>
-          {{ recipe.popularity }} likes {{n}} 
-          <!-- <router-link :to="{ name: 'login' }" style="text-decoration: none; position: absolute; padding-left: 30px;">
-            <b-button block variant="danger">Add to favorites</b-button>
-          </router-link> -->
-        </div>
-      </b-card>
-      <!-- <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
-    </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
+  <div>
+    <router-link
+      style="text-decoration: none; color: inherit"
+      :to="{ name: 'recipe', params: { recipeId: recipe.id, user_recipe: user_recipe} }"
+      class="recipe-preview"
+      v-b-hover="handleHovered"
+      ><div>
+        <b-card
+          :img-src="recipe.image"
+          :title="recipe.title"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="
+            max-width: 20rem;
+            height: 33rem;
+            font-family: Frank Ruhl Libre, Georgia;
+            border-radius: 10px;
+          "
+          class="mb-4"
+        >
+          <div class="mb-4">
+            <b-avatar
+              variant="light"
+              src="https://www.pngall.com/wp-content/uploads/8/Vegan-Transparent.png"
+              size="3.5em"
+              style="display: "
+            ></b-avatar>
+            <b-avatar
+              v-if="recipe.vegetarian"
+              variant="light"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM01sSL71L6crZ2k__oG2cKWGzov4-vYS2xwmG6SvYC05zJaum0OarEV2oG0w2T_BqhcQ&usqp=CAU"
+              size="3.8em"
+            ></b-avatar>
+            <slot></slot>
+            <b-avatar
+              v-if="recipe.glutenFree"
+              variant="light"
+              src="https://static.wixstatic.com/media/179523_cbcc13ff55ac449c84c366db1f767fd9~mv2.png/v1/fill/w_300,h_300,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/1772008_1.png"
+              size="4em"
+            ></b-avatar>
+          </div>
+          <div class="mb-4">
+            <b-avatar
+              variant="light"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfF0qGfmgFsf0E2ycAhkP6gcuZ05AAutJUzw&usqp=CAU"
+              size="2em"
+            ></b-avatar>
+            {{ recipe.readyInMinutes }} minutes
+            <b-avatar
+              variant="light"
+              src="https://cdn-icons-png.flaticon.com/512/1046/1046874.png"
+              size="2em"
+            ></b-avatar>
+            {{ recipe.servings }} people <br /><br />
+            <b-avatar
+              variant="light"
+              src="https://banner2.cleanpng.com/20180616/ccf/kisspng-thumb-signal-computer-icons-like-icon-5b24ba2679a3b8.7819004915291336064983.jpg"
+              size="2em"
+            ></b-avatar>
+            {{ recipe.popularity }} likes
+            <b-avatar v-if="watched"
+              variant="light"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-mIy8PoSlI5ATokKUgHZVXKVF9GTTgg7vCw&usqp=CAU"
+              size="2em"
+              style="margin-left: auto"
+            ></b-avatar>
+            <!-- <b-icon
+            icon="heart-fill"
+            class="gap_margin_5px_horizontal"
+            :style="currentMode == 'grid' ? 'color:red;' : 'color:blue'"
+            v-on:click="greet()"
+          /> -->
+            <br />
+          </div>
+        </b-card>
       </div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
-    </div> -->
+    </router-link>
+    <div>
+      <b-button v-if = "logged_in && !favorite"
+        :key="favorite"
+        @click="addToFavorites"    
+        style="text-decoration: none; position: relative"
+        variant="info"
+      >
+        Add to favorites
+      </b-button>
     </div>
-  </router-link>
+  </div>
 </template>
+
 
 <script>
 export default {
@@ -84,12 +97,13 @@ export default {
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
     });
-    // console.log(this.recipe);
   },
   data() {
     return {
       image_load: false,
-      n: JSON.parse(localStorage.getItem("favoriteRecipes"))
+      hovered: false,
+      favorite: undefined,
+      watched: undefined
     };
   },
   props: {
@@ -97,30 +111,47 @@ export default {
       type: Object,
       required: true,
     },
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
+    user_recipe: {
+      type: Boolean,
+      default: false,
+    },
+    logged_in:{
+      type: Boolean,
+      required: false,
+      default:false,
+    }
+  },
+  methods: {
+    handleHovered(hovered) {
+      this.hovered = hovered;
+    },
+    async addToFavorites() {
+      this.favorite = true;
+      this.$root.store.addToUserFavorite(this.recipe);
+    },
+  },
+  created() {
+    if (localStorage.getItem("userFavoriteRecipes")) {
+      let favorites = JSON.parse(localStorage.getItem("userFavoriteRecipes"));
+      for (let i = 0; i < favorites.length; i++) {
+        if (favorites[i].id === this.recipe.id) {
+          this.favorite = true;
+          return;
+        }
+      }
+      // console.log(this.recipe);
+    }
+    if (localStorage.getItem("userLastWatched")) {
+      let lastWatched = JSON.parse(localStorage.getItem("userLastWatched"));
+      for (let i = 0; i < lastWatched.length; i++) {
+        if (lastWatched[i].id === this.recipe.id) {
+          this.watched = true;
+          return;
+        }
+      }
+      // console.log(this.recipe);
+    }
+    this.watched = false;
   },
 };
 </script>
@@ -128,11 +159,12 @@ export default {
 <style scoped>
 .recipe-preview {
   display: inline-block;
-  width: 90%;
-  height: 100%;
+  display: list-ite;
+  width: 100%;
+  height: 90%;
   position: relative;
   margin: 10px 10px;
-  border-radius: 10px;
+  transition: all 0.4s ease-in-out;
 }
 .recipe-preview > .recipe-body {
   width: 100%;
@@ -200,5 +232,9 @@ export default {
   width: 90px;
   display: table-cell;
   text-align: center;
+}
+
+.recipe-preview:hover {
+  transform: scale(1.2);
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div v-if="$root.store.username">
+    <NotFound></NotFound>
+  </div>
+  <div v-else class="container">
     <h1 class="title">Register</h1>
     <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
       <b-form-group
@@ -103,9 +106,7 @@
           :options="countries"
           :state="validateState('country')"
         ></b-form-select>
-        <b-form-invalid-feedback>
-          Country is required
-        </b-form-invalid-feedback>
+        <b-form-invalid-feedback> Country is required </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group
@@ -160,7 +161,7 @@
       <b-button
         type="submit"
         variant="primary"
-        style="width:250px;"
+        style="width: 250px"
         class="ml-5 w-75"
         >Register</b-button
       >
@@ -187,16 +188,21 @@
 
 <script>
 import countries from "../assets/countries";
+import NotFound from "../pages/NotFoundPage";
+
 import {
   required,
   minLength,
   maxLength,
   alpha,
   sameAs,
-  email
+  email,
 } from "vuelidate/lib/validators";
 
 export default {
+  components: {
+    NotFound
+  },
   name: "Register",
   data() {
     return {
@@ -208,11 +214,11 @@ export default {
         password: "",
         confirmedPassword: "",
         email: "",
-        submitError: undefined
+        submitError: undefined,
       },
       countries: [{ value: null, text: "", disabled: true }],
       errors: [],
-      validated: false
+      validated: false,
     };
   },
   validations: {
@@ -220,34 +226,34 @@ export default {
       username: {
         required,
         length: (u) => minLength(3)(u) && maxLength(8)(u),
-        alpha
+        alpha,
       },
       country: {
-        required
+        required,
       },
       password: {
         required,
-        length: (p) => minLength(5)(p) && maxLength(10)(p)
+        length: (p) => minLength(5)(p) && maxLength(10)(p),
       },
       confirmedPassword: {
         required,
-        sameAsPassword: sameAs("password")
+        sameAsPassword: sameAs("password"),
       },
       email: {
         required,
-        email
+        email,
       },
       firstName: {
         required,
         length: (u) => minLength(3)(u) && maxLength(40)(u),
-        alpha
+        alpha,
       },
       lastName: {
         required,
         length: (u) => minLength(3)(u) && maxLength(40)(u),
-        alpha
-      }
-    }
+        alpha,
+      },
+    },
   },
   mounted() {
     // console.log("mounted");
@@ -269,7 +275,7 @@ export default {
             last_name: this.form.lastName,
             country: this.form.country,
             password: this.form.password,
-            email: this.form.email
+            email: this.form.email,
           }
         );
         this.$router.push("/login");
@@ -296,13 +302,13 @@ export default {
         country: null,
         password: "",
         confirmedPassword: "",
-        email: ""
+        email: "",
       };
       this.$nextTick(() => {
         this.$v.$reset();
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

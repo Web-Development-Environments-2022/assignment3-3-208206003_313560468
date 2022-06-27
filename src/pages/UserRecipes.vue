@@ -5,13 +5,14 @@
     </div>
 
     <div v-else>
-      <h1 class="title">Favorites Page</h1>
+      <h1 class="title">My Recipes Page</h1>
       <RecipePreviewList
-        title="Favourites Recipes"
-        :inRecipes="favoriteRecipes"
+        title="My Recipes"
+        :inRecipes="userRecipes"
         :random="false"
         :logged_in = "root.store.username"
         class="center"
+        :user_recipes="true"
       />
     </div>
   </div>
@@ -27,15 +28,23 @@ export default {
   },
   data() {
     return {
-      favoriteRecipes: undefined,
+      userRecipes: undefined,
     };
   },
-  created() {
+  async created() {
     try {
-      if (localStorage.getItem("userFavoriteRecipes") != undefined) {
-        this.favoriteRecipes = JSON.parse(localStorage.getItem("userFavoriteRecipes"));
+      if (localStorage.getItem("userRecipes") != undefined) {
+        this.userRecipes = JSON.parse(localStorage.getItem("userRecipes"));
+        for(let i = 0; i < this.userRecipes.length; i++) {
+            // console.log(this.userRecipes[i].image);
+            // const imageResponse = await this.axios.get(this.$root.store.server_domain + "/users/download", {
+            //     params: {
+            //         image: this.userRecipes[i].image
+            //     }
+            // })
+            this.userRecipes[i].image = this.$root.store.server_domain + "/users/download?image=" + this.userRecipes[i].image;
+        }
       }
-      console.log(this.favoriteRecipes)
     } catch (error) {
       console.log(error);
     }
