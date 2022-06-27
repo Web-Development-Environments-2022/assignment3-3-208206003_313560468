@@ -1,8 +1,8 @@
 <template>
   <div id="nav">
     <!-- The navigation bar when a user is logged in -->
-    <div v-if="$root.store.username" id="Loggednav">
-      <b-navbar toggleable="lg" type="dark" variant="info">
+    <div v-if="$root.store.username" id="Loggednav" >
+      <b-navbar toggleable="lg" type="dark" variant="dark">
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
