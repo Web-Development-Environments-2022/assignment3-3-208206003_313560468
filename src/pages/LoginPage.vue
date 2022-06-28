@@ -7,7 +7,8 @@
     <div v-else class="container">
 
       <b-form @submit.prevent="onLogin">
-        <b-form-group id="input-group-Username" label-cols-sm="3" label="Username:" label-for="Username">
+        <b-form-group id="input-group-Username" label-cols-sm="3" label="Username:" label-for="Username" >
+          
           <b-form-input id="Username" v-model="$v.form.username.$model" type="text" :state="validateState('username')">
           </b-form-input>
           <b-form-invalid-feedback>
@@ -29,9 +30,6 @@
       <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
         Login failed: {{ form.submitError }}
       </b-alert>
-      <!-- <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card> -->
     </div>
     <div id="registerRequest" style="text-align: center; margin-right: 50%; margin-top: 5%;" >
       <h1 style="color:white"> Do not have an account yet?</h1>

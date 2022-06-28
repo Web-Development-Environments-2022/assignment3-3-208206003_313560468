@@ -5,95 +5,46 @@
       <b-form @submit.prevent="onSearch">
         <b-input-group>
           <template #prepend>
-            <b-form-select
-              class="select"
-              v-model="form.number"
-              :options="number"
-            ></b-form-select>
+            <b-form-select class="select" v-model="form.number" :options="number"></b-form-select>
           </template>
 
-          <b-form-input
-            id="title"
-            v-model="$v.form.title.$model"
-            type="text"
-            :state="validateState('title')"
-          ></b-form-input>
+          <b-form-input id="title" v-model="$v.form.title.$model" type="text" :state="validateState('title')">
+          </b-form-input>
 
           <template #append>
-            <b-form-select
-              class="select"
-              v-model="form.cuisine"
-              :options="cuisines"
-              variant="dark"
-            ></b-form-select>
-            <b-form-select
-              class="select"
-              v-model="form.diet"
-              :options="diet"
-            ></b-form-select>
-            <b-form-select
-              class="select"
-              v-model="form.intolerance"
-              :options="intolerance"
-            ></b-form-select>
-            <b-button type="submit" class="mx-auto w-100" variant="danger"
-              >Search</b-button
-            >
+            <b-form-select class="select" v-model="form.cuisine" :options="cuisines" variant="dark"></b-form-select>
+            <b-form-select class="select" v-model="form.diet" :options="diet"></b-form-select>
+            <b-form-select class="select" v-model="form.intolerance" :options="intolerance"></b-form-select>
+            <b-button type="submit" class="mx-auto w-100" variant="danger">Search</b-button>
           </template>
         </b-input-group>
         <br /><br />
-        <div v-if="searched" class="btn-group btn-group-lg" :key="timeSort">
+        <div v-if="searched && results.length > 0" class="btn-group btn-group-lg" :key="timeSort">
           <b-row>
             <h1>Sort by:</h1>
-            <b-button
-              v-if="timeSort === 0"
-              style="background-color: #343a40; padding-left: 10px"
-              @click="sortByTime"
-              >Time in Minutes
+            <b-button v-if="timeSort === 0" style="background-color: #343a40; padding-left: 10px" @click="sortByTime">
+              Time in Minutes
             </b-button>
-            <b-button
-              v-else-if="timeSort === 1"
-              style="background-color: #343a40; padding-left: 10px"
-              @click="sortByTime"
-              >Time in Minutes &uarr;</b-button
-            >
-            <b-button
-              v-else-if="timeSort === -1"
-              style="background-color: #343343a40; padding-left: 10px"
-              @click="sortByTime"
-              >Time in Minutes &darr;</b-button
-            >
-            <b-button
-              v-if="popularitySort === 0"
-              style="background-color: #343a40; padding-left: 10px"
-              @click="sortByPopularity"
-              >popularity</b-button
-            >
-            <b-button
-              v-else-if="popularitySort === 1"
-              style="background-color: #343a40; padding-left: 10px"
-              @click="sortByPopularity"
-              >popularity &uarr;</b-button
-            >
-            <b-button
-              v-else-if="popularitySort === -1"
-              style="background-color: #343a40; padding-left: 10px"
-              @click="sortByPopularity"
-              >popularity &darr;</b-button
-            >
+            <b-button v-else-if="timeSort === 1" style="background-color: #343a40; padding-left: 10px"
+              @click="sortByTime">Time in Minutes &uarr;</b-button>
+            <b-button v-else-if="timeSort === -1" style="background-color: #343343a40; padding-left: 10px"
+              @click="sortByTime">Time in Minutes &darr;</b-button>
+            <b-button v-if="popularitySort === 0" style="background-color: #343a40; padding-left: 10px"
+              @click="sortByPopularity">popularity</b-button>
+            <b-button v-else-if="popularitySort === 1" style="background-color: #343a40; padding-left: 10px"
+              @click="sortByPopularity">popularity &uarr;</b-button>
+            <b-button v-else-if="popularitySort === -1" style="background-color: #343a40; padding-left: 10px"
+              @click="sortByPopularity">popularity &darr;</b-button>
           </b-row>
         </div>
       </b-form>
     </div>
-    <div v-if="searched">
-      <RecipePreviewList
-        title=""
-        :inRecipes="results"
-        :random="false"
-        :key="results"
-        :logged_in="Boolean($root.store.username)"
-        class="center"
-      />
+    <div v-if="searched && results.length > 0">
+      <RecipePreviewList title="" :inRecipes="results" :random="false" :key="results"
+        :logged_in="Boolean($root.store.username)" class="center" />
+    </div>
+    <div id="notFound" v-else-if="searched">
+      <h1>No results found, try another search!</h1>
     </div>
   </div>
 </template>
@@ -165,14 +116,8 @@ export default {
         );
         sessionStorage.setItem("searchQuery", this.form.title);
         sessionStorage.setItem("searchResults", JSON.stringify(response.data));
-        this.searched = true;
         this.results = response.data;
-        // console.log(response);
-        // this.$root.loggedIn = true;
-        // console.log(this.$root.store.login);
-        // this.$root.store.login(this.form.username);
-        // await this.$root.store.produceUserData();
-        // this.$router.push("/");
+        this.searched = true;
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
@@ -228,9 +173,18 @@ export default {
   background-color: #343a40;
   color: white;
 }
+
 h1 {
   padding-left: 25px;
   color: rgb(243, 223, 174);
+  font-family: Frank Ruhl Libre, Georgia;
+}
+
+#NotFound {
+  padding-top: 50px;
+  font-size: 120px;
+  text-align: center;
+  color: rgb(248, 248, 217);
   font-family: Frank Ruhl Libre, Georgia;
 }
 </style>

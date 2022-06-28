@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <h3>
-      {{ title }}:
+      {{ title }}
       <slot></slot>
     </h3>
     <b-card-group deck style="text-align: center">

@@ -3,7 +3,6 @@
     <div class="neon-text">Liroey Recipes</div>
     <div>
       <RecipePreviewList
-        title=""
         :random="true"
         :key="rerender"
         :logged_in = "Boolean($root.store.username)"
@@ -35,7 +34,6 @@
     
 
     <RecipePreviewList
-      title=""
       :class="{
         RandomRecipes: true,
         blur: !$root.store.username,

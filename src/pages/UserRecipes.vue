@@ -7,7 +7,6 @@
     <div v-else>
       <h1 class="title">My Recipes Page</h1>
       <RecipePreviewList
-        title="My Recipes"
         :inRecipes="userRecipes"
         :random="false"
         :logged_in = "Boolean($root.store.username)"

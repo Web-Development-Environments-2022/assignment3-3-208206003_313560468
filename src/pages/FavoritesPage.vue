@@ -4,15 +4,17 @@
       <NotFound></NotFound>
     </div>
 
-    <div v-else>
+    <div v-else-if="favoriteRecipes">
       <h1 class="title">Favorites Page</h1>
       <RecipePreviewList
-        title="Favourites Recipes"
         :inRecipes="favoriteRecipes"
         :random="false"
         :logged_in = "Boolean($root.store.username)"
         class="center"
       />
+    </div>
+    <div v-else>
+      <h1 id="NotFound">You havn't added anything yet!</h1>
     </div>
   </div>
 </template>
@@ -43,17 +45,12 @@ export default {
 };
 </script>
 
-<!-- <style lang="scss" scoped>
-.RandomRecipes {
-  margin: 10px 0 10px;
+<style>
+#NotFound {
+  padding-top: 50px;
+  font-size: 120px;
+  text-align: center;
+  color: rgb(248, 248, 217);
+  font-family: Frank Ruhl Libre, Georgia;
 }
-.blur {
-  -webkit-filter: blur(5px);
-  /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
-}
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
-}
-</style> -->
+</style>

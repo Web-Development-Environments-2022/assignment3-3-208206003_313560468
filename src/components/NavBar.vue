@@ -14,107 +14,48 @@
             </b-nav-item>
             <b-nav-item href="#">
               <router-link :to="{ name: 'search' }">
-                <h2> Search</h2>
+                <h2>Search</h2>
               </router-link>
             </b-nav-item>
-            
+
             <b-nav-item href="#">
               <router-link :to="{ name: 'about' }">
-                <h2> About Us </h2>
+                <h2>About Us</h2>
               </router-link>
             </b-nav-item>
             <b-nav-item id="createRecipe" v-b-modal.modal-prevent-closing>
-              <h2> Create Recipe </h2>
+              <h2>Create Recipe</h2>
             </b-nav-item>
-            <b-modal modal-class="my-class" id="modal-prevent-closing" ref="modal" title="Create Recipe"
-              @hidden="resetModal" @submit="handleSubmit" size="xl">
-              <b-form @submit.stop.prevent="handleSubmit">
-                <b-form-group label="Title:" invalid-feedback="*" :state="Boolean(form.title)">
-                  <b-form-input :state="Boolean(form.title)" id="name-input" v-model="form.title" required
-                    placeholder="Title" class="mb-2 mr-sm-2 mb-sm-0"></b-form-input>
-                </b-form-group>
-                <b-form-group label="Image:" invalid-feedback="*" :state="Boolean(form.image)">
-                  <b-form-file :state="Boolean(form.image)" id="image-input" v-model="form.image"
-                    placeholder="Choose a Image or drop it here..." drop-placeholder="Drop Image here..."
-                    accept="image/jpeg, image/png, image/jpg" class="mb-2 mr-sm-2 mb-sm-0"></b-form-file>
-                </b-form-group>
-              </b-form>
-              <b-form @submit.stop.prevent="handleSubmit" inline>
-                <b-form-checkbox id="vegan" v-model="form.vegan" name="vegan" :value="true" :unchecked-value="false">
-                  Vegan
-                </b-form-checkbox>
-                <b-form-checkbox id="vegetarian" v-model="form.vegetarian" name="vegetarian" :value="true"
-                  :unchecked-value="false">
-                  Vegetarian
-                </b-form-checkbox>
-                <b-form-checkbox id="glutenFree" v-model="form.glutenFree" name="glutenFree" :value="true"
-                  :unchecked-value="false">
-                  Gluten Free
-                </b-form-checkbox>
-                <b-form-group invalid-feedback="*" :state="Boolean(parseInt(form.readyInMinutes))"
-                  label="Ready in minutes:">
-                  <b-form-input :state="Boolean(parseInt(form.readyInMinutes))" id="time-input"
-                    v-model="form.readyInMinutes" required placeholder="Ready in minutes" class="mb-2 mr-sm-2 mb-sm-0">
-                  </b-form-input>
-                </b-form-group>
-                <b-form-group invalid-feedback="*" :state="Boolean(parseInt(form.servings))" label="Servings:">
-                  <b-form-input :state="Boolean(parseInt(form.servings))" id="servings-input" v-model="form.servings"
-                    required placeholder="Servings" class="mb-2 mr-sm-2 mb-sm-0"></b-form-input>
-                </b-form-group>
-              </b-form>
-              <b-form @submit.stop.prevent="handleSubmit">
-                <strong>Ingredients:</strong>
-                <br /><br />
-                <b-form-group :state="Boolean(form.ingredients)" v-for="ingredient in form.ingredients"
-                  :key="ingredient.key" invalid-feedback="*">
-                  <b-form-input :state="Boolean(ingredient.value)" v-model="ingredient.value" required
-                    placeholder="Ingredient" class="mb-2 mr-sm-2 mb-sm-0"></b-form-input>
-                </b-form-group>
-                <b-avatar button @click="addIngredient" variant="transparent"
-                  :src="require('@/assets/plus.png')" size="2em"
-                  style="text-align: center"></b-avatar>
-                <b-avatar button @click="removeIngredient" variant="transparent"
-                  :src="require('@/assets/minus.png')" size="2em"
-                  style="text-align: center"></b-avatar>
+            
+            <AddRecipeModal />
 
-                <br /><br />
-                <strong>Instructions:</strong>
-                <b-form-group :state="Boolean(form.instructions)" invalid-feedback="*">
-                  <b-form-textarea :state="
-                    Boolean(form.instructions.length <= 2000) &&
-                    Boolean(form.instructions)
-                  " id="instructions" v-model="form.instructions" placeholder="Enter instructions..." rows="6"
-                    max-rows="8" required></b-form-textarea>
-                </b-form-group>
-                <br /><br />
-                <b-button type="submit" variant="primary" style="width: 100px; display: block" class="mx-auto w-100">
-                  Login</b-button>
-              </b-form>
-            </b-modal>
-            <!-- Drop down for personal info -->
-
-            <b-nav-item-dropdown type="dark" variant="dark" text="Personal" left>
+            <b-nav-item-dropdown
+              type="dark"
+              variant="dark"
+              text="Personal"
+              left
+            >
               <b-dropdown-item href="#" id="Favourites">
                 <router-link :to="{ name: 'favorites' }">
-                  <h3> My favourites </h3>
+                  <h3>My favourites</h3>
                 </router-link>
               </b-dropdown-item>
               <b-dropdown-item href="#">
                 <router-link :to="{ name: 'user_recipes' }">
-                  <h3> My recipes </h3>
+                  <h3>My recipes</h3>
                 </router-link>
               </b-dropdown-item>
               <b-dropdown-item href="#">
-                <h3> My family recipes </h3>
+                <h3>My family recipes</h3>
               </b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item id="hellowUser">
-              <h2> Hellow {{ $root.store.username }} </h2>
+              <h2>Hellow {{ $root.store.username }}</h2>
             </b-nav-item>
             <b-nav-item id="hellowUser" @click="Logout">
-              <h2> Logout </h2>
+              <h2>Logout</h2>
             </b-nav-item>
           </b-navbar-nav>
         </b-collapse>
@@ -128,36 +69,35 @@
           <b-navbar-nav>
             <b-nav-item href="#">
               <router-link :to="{ name: 'main' }">
-                <h2> Main </h2>
+                <h2>Main</h2>
               </router-link>
             </b-nav-item>
             <b-nav-item href="#">
               <router-link :to="{ name: 'search' }">
-                <h2> Search </h2>
+                <h2>Search</h2>
               </router-link>
             </b-nav-item>
             <b-nav-item href="#">
               <!-- Add route to About page -->
               <router-link :to="{ name: 'about' }">
-                <h2> About Us </h2>
+                <h2>About Us</h2>
               </router-link>
             </b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item id="hellowGuest">
-              <h2> Hellow Guest </h2>
+              <h2>Hellow Guest</h2>
             </b-nav-item>
             <b-nav-item href="#" id="register">
               <router-link :to="{ name: 'register' }">
-                <h2> Register </h2>
+                <h2>Register</h2>
               </router-link>
             </b-nav-item>
             <b-nav-item href="#" id="login">
-                <router-link :to="{ name: 'login' }">
-                  <h2> Login </h2>
-                </router-link>
+              <router-link :to="{ name: 'login' }">
+                <h2>Login</h2>
+              </router-link>
             </b-nav-item>
-           
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -167,23 +107,11 @@
 
 <script>
 // import { title } from "process";
+import AddRecipeModal from "../components/AddRecipeModal";
 
 export default {
-  data() {
-    return {
-      form: {
-        title: undefined,
-        image: undefined,
-        vegan: false,
-        vegetarian: false,
-        glutenFree: false,
-        readyInMinutes: undefined,
-        servings: undefined,
-        ingredients: [{ value: undefined, key: 0 }],
-        instructions: "",
-      },
-      ingredientCount: 1,
-    };
+  components: {
+    AddRecipeModal,
   },
   props: {
     logout: { type: Function },
@@ -191,54 +119,6 @@ export default {
   methods: {
     Logout() {
       this.logout();
-    },
-    resetModal() {
-      this.form.title = undefined;
-      this.form.image = undefined;
-      this.form.vegan = false;
-      this.form.vegetarian = false;
-      this.form.readyInMinutes = undefined;
-      this.form.servings = undefined;
-    },
-    addIngredient() {
-      this.form.ingredients.push({
-        value: undefined,
-        key: this.ingredientCount,
-      });
-      this.ingredientCount += 1;
-    },
-    removeIngredient() {
-      this.form.ingredients.pop();
-      if (this.ingredientCount > 0) {
-        this.ingredientCount -= 1;
-      }
-    },
-    handleSubmit() {
-      try {
-        const formData = new FormData();
-        formData.append("title", this.form.title);
-        formData.append("image", this.form.image);
-        formData.append("vegan", this.form.vegan);
-        formData.append("vegetarian", this.form.vegetarian);
-        formData.append("glutenFree", this.form.glutenFree);
-        formData.append("readyInMinutes", this.form.readyInMinutes);
-        formData.append("servings", this.form.servings);
-        for (let i = 0; i < this.form.ingredients.length; i++) {
-          formData.append("ingredients[]", this.form.ingredients[i].value);
-        }
-        formData.append("instructions", this.form.instructions);
-        this.axios.post(this.$root.store.server_domain + "/users/add_recipe", formData).then(
-          function (result) {
-            console.log(result);
-          },
-          function (error) {
-            console.log(error);
-          }
-        );
-        this.$root.store.setUserRecipes();
-      } catch (error) {
-        console.log(error);
-      }
     },
   },
 };
