@@ -1,8 +1,8 @@
 <template>
   <div>
     <router-link style="text-decoration: none; color: inherit"
-      :to="{ name: user_recipe ? 'my_recipe' : 'recipe', params: { recipeId: recipe.id, user_recipe: user_recipe } }"
-      class="recipe-preview" v-b-hover="handleHovered">
+      :to="{ name: 'recipe', params: { recipeId: recipe.id, user_recipe: user_recipe } }" class="recipe-preview"
+      v-b-hover="handleHovered">
       <div>
         <b-card :img-src="recipe.image" :title="recipe.title" img-alt="Image" img-top tag="article" style="
             max-width: 20rem;
@@ -29,19 +29,15 @@
             <b-avatar variant="transparent" src="https://cdn-icons-png.flaticon.com/512/1046/1046874.png" size="2em">
             </b-avatar>
             {{ recipe.servings }} people <br /><br />
-            <b-avatar variant="transparent"
-              src="https://banner2.cleanpng.com/20180616/ccf/kisspng-thumb-signal-computer-icons-like-icon-5b24ba2679a3b8.7819004915291336064983.jpg"
-              size="2em"></b-avatar>
-            {{ recipe.popularity }} likes
+            <div v-if="!user_recipe">
+              <b-avatar variant="transparent"
+                src="https://banner2.cleanpng.com/20180616/ccf/kisspng-thumb-signal-computer-icons-like-icon-5b24ba2679a3b8.7819004915291336064983.jpg"
+                size="2em"></b-avatar>
+              {{ recipe.popularity }} likes
+            </div>
             <b-avatar v-if="watched" variant="transparent"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-mIy8PoSlI5ATokKUgHZVXKVF9GTTgg7vCw&usqp=CAU"
               size="2em" style="margin-left: auto"></b-avatar>
-            <!-- <b-icon
-            icon="heart-fill"
-            class="gap_margin_5px_horizontal"
-            :style="currentMode == 'grid' ? 'color:red;' : 'color:blue'"
-            v-on:click="greet()"
-          /> -->
             <br />
           </div>
         </b-card>

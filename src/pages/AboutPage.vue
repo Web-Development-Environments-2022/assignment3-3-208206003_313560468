@@ -63,8 +63,6 @@ h1 {
   padding-left: 25px;
   color: rgb(248, 248, 217);
   font-family: Frank Ruhl Libre, Georgia;
-
-
 }
 
 h3 {
