@@ -37,7 +37,6 @@ export default {
       if (localStorage.getItem("userFavoriteRecipes") != undefined) {
         this.favoriteRecipes = JSON.parse(localStorage.getItem("userFavoriteRecipes"));
       }
-      console.log(this.favoriteRecipes)
     } catch (error) {
       console.log(error);
     }

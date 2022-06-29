@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link style="text-decoration: none; color: inherit"
-      :to="{ name: 'recipe', params: { recipeId: recipe.id, user_recipe: user_recipe } }" class="recipe-preview"
+      :to="{ name: user_recipe ? 'my_recipe':'recipe', params: { recipeId: recipe.id, user_recipe: user_recipe} }" class="recipe-preview"
       v-b-hover="handleHovered">
       <div>
         <b-card :img-src="recipe.image" :title="recipe.title" img-alt="Image" img-top tag="article" style="
@@ -89,7 +89,7 @@ export default {
     },
     async addToFavorites() {
       this.favorite = true;
-      this.$root.store.addToUserFavorite(this.recipe);
+      await this.$root.store.addToUserFavorite(this.recipe);
     },
   },
   created() {
@@ -98,6 +98,7 @@ export default {
       for (let i = 0; i < favorites.length; i++) {
         if (favorites[i].id === this.recipe.id) {
           this.favorite = true;
+          this.recipe.favorite = true;
           return;
         }
       }

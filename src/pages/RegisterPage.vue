@@ -269,7 +269,7 @@ export default {
     async Register() {
       try {
         const response = await this.axios.post(
-          "http://localhost:3000/register",
+          this.$root.store.server_domain + "/register",
           {
             user_name: this.form.username,
             first_name: this.form.lastName,

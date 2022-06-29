@@ -55,7 +55,6 @@ export default {
       glutenFree,
       servings,
     } = response.data;
-
     image = this.$root.store.server_domain + "/users/download?image=" + image;
     let _recipe = {
       instructions,
@@ -69,7 +68,6 @@ export default {
       servings,
     };
     this.recipe = _recipe;
-    console.log(this.recipe);
   },
   components: { RecipeView },
 };

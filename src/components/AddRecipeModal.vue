@@ -1,12 +1,13 @@
 <template>
   <b-modal
     modal-class="my-class"
-    hide-footer
     id="modal-prevent-closing"
     title="Create Recipe"
     @hidden="resetModal"
     @submit="handleSubmit"
     size="xl"
+    ref="my-modal"
+    hide-footer
   >
     <b-form @submit.stop.prevent="handleSubmit">
       <b-form-group
@@ -101,19 +102,20 @@
       <strong>Ingredients:</strong>
       <br /><br />
       <b-form-group
-        :state="Boolean(form.ingredients)"
         v-for="ingredient in form.ingredients"
-        :key="ingredient.value"
+        :key="ingredient.key"
         invalid-feedback="*"
+        :state="Boolean(form.ingredients) && Boolean(ingredient.value ? ingredient.value.length <= 80: false)"
       >
         <b-form-input
-          :state="Boolean(ingredient.value)"
+          :state="Boolean(ingredient.value) && Boolean(ingredient.value ? ingredient.value.length <= 80: false)"
           v-model="ingredient.value"
           required
           placeholder="Ingredient"
           class="mb-2 mr-sm-2 mb-sm-0"
         ></b-form-input>
       </b-form-group>
+      <br />
       <b-avatar
         button
         @click="addIngredient"
@@ -135,19 +137,22 @@
       <strong>Instructions:</strong>
       <br /><br />
       <b-form-group
-        :state="Boolean(form.instructions)"
+        :state="Boolean(form.instructions) && Boolean(instruction.value ? instruction.value.length <= 250 : false)"
         v-for="instruction in form.instructions"
-        :key="instruction.value"
+        :key="instruction.key"
         invalid-feedback="*"
       >
         <b-form-input
-          :state="Boolean(instruction.value)"
+          :state="
+            Boolean(instruction.value) && Boolean(instruction.value ? instruction.value.length <= 250 : false)
+          "
           v-model="instruction.value"
           required
           placeholder="Instruction"
           class="mb-2 mr-sm-2 mb-sm-0"
         ></b-form-input>
       </b-form-group>
+      <br />
       <b-avatar
         button
         @click="addInstruction"
@@ -190,11 +195,11 @@ export default {
         glutenFree: false,
         readyInMinutes: undefined,
         servings: undefined,
-        ingredients: [{ value: undefined, key: 0 }],
-        instructions: [{ value: undefined, key: 0 }],
+        ingredients: [{ value: undefined, key: 1 }],
+        instructions: [{ value: undefined, key: -1 }],
       },
       ingredientCount: 1,
-      instructionCount: 1,
+      instructionCount: -1,
     };
   },
   methods: {
@@ -207,18 +212,18 @@ export default {
       this.form.servings = undefined;
     },
     addIngredient() {
+      this.ingredientCount += 1;
       this.form.ingredients.push({
         value: undefined,
         key: this.ingredientCount,
       });
-      this.ingredientCount += 1;
     },
     addInstruction() {
+      this.instructionCount -= 1;
       this.form.instructions.push({
         value: undefined,
         key: this.ingredientCount,
       });
-      this.instructionCount += 1;
     },
     removeIngredient() {
       this.form.ingredients.pop();
@@ -228,8 +233,8 @@ export default {
     },
     removeInstruction() {
       this.form.instructions.pop();
-      if (this.instructionCount > 0) {
-        this.instructionCount -= 1;
+      if (this.instructionCount < 0) {
+        this.instructionCount += 1;
       }
     },
     handleSubmit() {
@@ -248,7 +253,6 @@ export default {
         for (let i = 0; i < this.form.instructions.length; i++) {
           formData.append("instructions[]", this.form.instructions[i].value);
         }
-        console.log(formData);
         this.axios
           .post(this.$root.store.server_domain + "/users/add_recipe", formData)
           .then(
@@ -260,6 +264,7 @@ export default {
             }
           );
         this.$root.store.setUserRecipes();
+        this.$refs["my-modal"].hide();
       } catch (error) {
         console.log(error);
       }
@@ -267,3 +272,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+::v-deep .my-class > .modal-dialog > .modal-content > .modal-header {
+  background: black;
+  color: white;
+}
+
+::v-deep .my-class > .modal-dialog > .modal-content {
+  background: #343a40;
+  color: white;
+}
+
+::v-deep .my-class {
+  backdrop-filter: blur(3px);
+}
+</style>

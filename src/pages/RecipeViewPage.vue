@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RecipeView :recipe="recipe"></RecipeView>
+    <RecipeView :recipe="recipe" :logged_in="$root.store.username"></RecipeView>
   </div>
 </template> 
 
@@ -69,10 +69,19 @@ export default {
       servings,
     };
     this.recipe = _recipe;
-    if (!this.$route.params.user_recipe) {
-      console.log(this.recipe);
+    if (!this.$route.params.user_recipe && this.$root.store.username) {
       this.$root.store.addToUserLastWatched(this.recipe);
     }
+    if (localStorage.getItem("userFavoriteRecipes")) {
+      let favorites = JSON.parse(localStorage.getItem("userFavoriteRecipes"));
+      for (let i = 0; i < favorites.length; i++) {
+        if (favorites[i].id === this.recipe.id) {
+          this.recipe.favorite = true;
+          return;
+        }
+      }
+    }
+    this.recipe.favorite = false;
   },
   components: {  RecipeView },
 };

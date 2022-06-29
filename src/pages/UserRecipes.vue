@@ -41,7 +41,6 @@ export default {
             //         image: this.userRecipes[i].image
             //     }
             // })
-            console.log(this.$root.store.server_domain);
             this.userRecipes[i].image = this.$root.store.server_domain + "/users/download?image=" + this.userRecipes[i].image;
         }
       }

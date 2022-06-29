@@ -21,7 +21,7 @@
     </div>
     <h1> Last Viewed Recipes:</h1>
 
-    <div id="membershipRequest" style="text-align: left; margin-right: 50%;" >
+    <div v-if="!$root.store.username" id="membershipRequest" style="text-align: left; margin-right: 50%;" >
       <h3> Only members can see that</h3>
       <b-button  style="max-width: 100px; background-color: blue;">
         <router-link to="login" style="color: white;"> Login</router-link>
