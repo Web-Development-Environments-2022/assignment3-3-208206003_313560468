@@ -6,6 +6,7 @@
     "build": "vue-cli-service build src/main.js"
   },
   "dependencies": {
+    "@syncfusion/ej2-vue-dropdowns": "^20.2.43",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
@@ -13,6 +14,8 @@
     "sass": "^1.52.3",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
+    "vue-multi-select": "^4.6.0",
+    "vue-multiselect": "^2.1.6",
     "vue-router": "^3.2.0",
     "vuelidate": "^0.7.5"
   },

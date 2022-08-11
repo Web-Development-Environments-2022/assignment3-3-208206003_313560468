@@ -6,7 +6,7 @@
     </h3>
     <b-card-group deck style="text-align: center">
       <div v-for="r in recipes" :key="r.id">
-        <RecipePreview title="" class="recipePreview" :recipe="r" :user_recipe="user_recipes" :logged_in="logged_in" />
+        <RecipePreview title="" class="recipePreview" :recipe="r" :user_recipe="user_recipes" :family_recipe="family_recipes" :logged_in="logged_in" />
       </div>
     </b-card-group>
   </b-container>
@@ -33,6 +33,10 @@ export default {
       required: true,
     },
     user_recipes: {
+      type: Boolean,
+      default: false,
+    },
+    family_recipes: {
       type: Boolean,
       default: false,
     },

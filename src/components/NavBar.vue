@@ -26,7 +26,7 @@
             <b-nav-item id="createRecipe" v-b-modal.modal-prevent-closing>
               <h2>Create Recipe</h2>
             </b-nav-item>
-            
+
             <AddRecipeModal />
 
             <b-nav-item-dropdown
@@ -46,7 +46,9 @@
                 </router-link>
               </b-dropdown-item>
               <b-dropdown-item href="#">
-                <h3>My family recipes</h3>
+                <router-link :to="{ name: 'family_recipes' }">
+                  <h3>My family recipes</h3>
+                </router-link>
               </b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>

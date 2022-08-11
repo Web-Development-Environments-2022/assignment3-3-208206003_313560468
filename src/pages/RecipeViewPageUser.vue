@@ -67,6 +67,7 @@ export default {
       glutenFree,
       servings,
     };
+    console.log
     this.recipe = _recipe;
   },
   components: { RecipeView },

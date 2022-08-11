@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{recipe.id}}
     <RecipeView :recipe="recipe" :logged_in="$root.store.username"></RecipeView>
   </div>
 </template> 

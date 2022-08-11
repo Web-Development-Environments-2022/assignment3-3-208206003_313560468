@@ -1,8 +1,5 @@
 <template>
-  <div v-if="!recipe">
-    <NotFoundPage></NotFoundPage>
-  </div>
-  <div class="container" v-else>
+  <div class="container">
     <b-card-group deck style="text-align: center">
       <b-card
         :img-src="recipe.image"
@@ -82,7 +79,7 @@
             ></b-avatar>
             <h1>{{ recipe.readyInMinutes }} minutes</h1> </b-row
           ><br />
-          <b-row v-if="!user_recipe">
+          <b-row v-if="!user_recipe && !family_recipe">
             <b-avatar
               variant="transparent"
               :src="require('@/assets/like.png')"
@@ -191,14 +188,16 @@ export default {
       required: false,
       default: false,
     },
+    family_recipe: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     logged_in: {
       type: Boolean,
       required: false,
       default: false,
     },
-  },
-  created() {
-    console.log(this.recipe);
   },
   // created() {
   //   if (!this.user_recipe && localStorage.getItem("userFavoriteRecipes")) {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link style="text-decoration: none; color: inherit"
-      :to="{ name: user_recipe ? 'my_recipe':'recipe', params: { recipeId: recipe.id, user_recipe: user_recipe} }" class="recipe-preview"
+      :to="{ name: user_recipe ? 'my_recipe': family_recipe ? 'family_recipe': 'recipe', params: { recipeId: recipe.id, user_recipe: user_recipe, family_recipe: family_recipe} }" class="recipe-preview"
       v-b-hover="handleHovered">
       <div>
         <b-card :img-src="recipe.image" :title="recipe.title" img-alt="Image" img-top tag="article" style="
@@ -77,6 +77,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    family_recipe: {
+      type: Boolean,
+      default: false,
+    },
     logged_in: {
       type: Boolean,
       required: false,
@@ -102,17 +106,17 @@ export default {
           return;
         }
       }
-      // console.log(this.recipe);
     }
     if (localStorage.getItem("userLastWatched")) {
       let lastWatched = JSON.parse(localStorage.getItem("userLastWatched"));
+      console.log(lastWatched)
       for (let i = 0; i < lastWatched.length; i++) {
         if (lastWatched[i].id === this.recipe.id) {
+          console.log(this.recipe.id)
           this.watched = true;
           return;
         }
       }
-      // console.log(this.recipe);
     }
     this.watched = false;
   },
