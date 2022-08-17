@@ -23,12 +23,27 @@ export default {
       familyRecipes: undefined,
     };
   },
-  created() {
+  async created() {
     try {
-      if (localStorage.getItem("familyRecipes") != undefined) {
-        this.familyRecipes = JSON.parse(localStorage.getItem("familyRecipes"));
-        console.log(this.familyRecipes);
+      if (sessionStorage.getItem("familyRecipes") != undefined) {
+        this.familyRecipes = JSON.parse(
+          sessionStorage.getItem("familyRecipes")
+        );
+        for (let i = 0; i < this.familyRecipes.length; i++) {
+          this.familyRecipes[i].image =
+            this.$root.store.server_domain +
+            "/recipes/download?image=" +
+            this.familyRecipes[i].image;
+          console.log("image changed" + i);
+          for (let j = 0; j < this.familyRecipes[i].images.length; j++) {
+            this.familyRecipes[i].images[j].src =
+              this.$root.store.server_domain +
+              "/recipes/download?image=" +
+              this.familyRecipes[i].images[j].src;
+          }
+        }
       }
+      
     } catch (error) {
       console.log(error);
     }

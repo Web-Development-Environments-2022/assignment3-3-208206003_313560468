@@ -23,9 +23,11 @@
                 <h2>About Us</h2>
               </router-link>
             </b-nav-item>
+        
             <b-nav-item id="createRecipe" v-b-modal.modal-prevent-closing>
               <h2>Create Recipe</h2>
             </b-nav-item>
+
 
             <AddRecipeModal />
 
@@ -45,11 +47,13 @@
                   <h3>My recipes</h3>
                 </router-link>
               </b-dropdown-item>
+              
               <b-dropdown-item href="#">
-                <router-link :to="{ name: 'family_recipes' }">
-                  <h3>My family recipes</h3>
-                </router-link>
-              </b-dropdown-item>
+              <router-link :to="{ name: 'family_recipes' }">
+                <h3>Family Recipes</h3>
+              </router-link>
+            </b-dropdown-item>
+
             </b-nav-item-dropdown>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
@@ -80,11 +84,11 @@
               </router-link>
             </b-nav-item>
             <b-nav-item href="#">
-              <!-- Add route to About page -->
               <router-link :to="{ name: 'about' }">
                 <h2>About Us</h2>
               </router-link>
             </b-nav-item>
+
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item id="hellowGuest">
@@ -108,7 +112,7 @@
 </template>
 
 <script>
-// import { title } from "process";
+
 import AddRecipeModal from "../components/AddRecipeModal";
 
 export default {
@@ -130,6 +134,7 @@ export default {
 #hellowGuest {
   font-size: large;
   font-family: Frank Ruhl Libre, Georgia;
+  color: rgb(150, 150, 150);
 }
 
 h2 {
@@ -139,7 +144,7 @@ h2 {
 }
 
 ::v-deep .dropdown .nav-link {
-  color: white !important;
+  color: white!important;
   font-size: 18px;
   font-family: Frank Ruhl Libre, Georgia;
 }
@@ -149,20 +154,4 @@ h3 {
   font-family: Frank Ruhl Libre, Georgia;
 }
 
-/* /deep/ .my-class {
-  background: black;
-  color: white;
-}
-
-/deep/ .my-second-class > .modal-dialog > .modal-content > .modal-header {
-  background: black;
-  color: white;
-} */
-/* img {
-    background: transparent 0% 0% no-repeat padding-box;
-    opacity: 1;
-    width: 31px;
-    height: 24px;
-    margin-top: -12px;
-} */
 </style>

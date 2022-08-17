@@ -29,21 +29,6 @@ export default {
       this.$router.replace("/NotFound");
       return;
     }
-
-    // try {
-    //   let responseData = {
-    //     instructions: "Asdasdasdasda",
-    //     ingredients: ["put 1 salt", "put 2 hara", "add 3 cosemek", "yesh leha banana aba?"],
-    //     popularity: 3,
-    //     readyInMinutes: 40,
-    //     image: "https://www.seriouseats.com/thmb/DeOzmC_A8yHIiCLo2KCcUfedwv4=/1500x844/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__2020__03__20200224-carretteira-pasta-vicky-wasik-21-ffe68515b25f4b348cbde845a59d6a62.jpg",
-    //     title: "ze shelanu aba",
-    //     vegan: true,
-    //     vegetarian: true,
-    //     glutenFree: true,
-    //     servings: 5
-
-    //   };
     let {
       instructions,
       ingredients,
@@ -67,7 +52,6 @@ export default {
       glutenFree,
       servings,
     };
-    console.log
     this.recipe = _recipe;
   },
   components: { RecipeView },

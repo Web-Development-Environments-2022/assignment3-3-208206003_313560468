@@ -1,51 +1,103 @@
 <template>
   <div>
-    <router-link style="text-decoration: none; color: inherit"
-      :to="{ name: user_recipe ? 'my_recipe': family_recipe ? 'family_recipe': 'recipe', params: { recipeId: recipe.id, user_recipe: user_recipe, family_recipe: family_recipe} }" class="recipe-preview"
-      v-b-hover="handleHovered">
+    <router-link
+      style="text-decoration: none; color: inherit"
+      :to="{
+        name: user_recipe
+          ? 'my_recipe'
+          : family_recipe
+          ? 'family_recipe'
+          : 'recipe',
+        params: {
+          recipeId: recipe.id,
+          user_recipe: user_recipe,
+          family_recipe: family_recipe,
+        },
+      }"
+      class="recipe-preview"
+      v-b-hover="handleHovered"
+    >
       <div>
-        <b-card :img-src="recipe.image" :title="recipe.title" img-alt="Image" img-top tag="article" style="
+        <b-card
+          :img-src="recipe.image"
+          :title="recipe.title"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="
             max-width: 20rem;
             height: 33rem;
             font-family: Frank Ruhl Libre, Georgia;
             border-radius: 10px;
-          " class="mb-4">
+          "
+          class="mb-4"
+        >
           <div class="mb-4">
-            <b-avatar variant="transparent" src="https://www.pngall.com/wp-content/uploads/8/Vegan-Transparent.png"
-              size="3.5em" style="display: "></b-avatar>
-            <b-avatar v-if="recipe.vegetarian" variant="transparent"
+            <b-avatar
+              variant="transparent"
+              src="https://www.pngall.com/wp-content/uploads/8/Vegan-Transparent.png"
+              size="3.5em"
+              style="display: "
+            ></b-avatar>
+            <b-avatar
+              v-if="recipe.vegetarian"
+              variant="transparent"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM01sSL71L6crZ2k__oG2cKWGzov4-vYS2xwmG6SvYC05zJaum0OarEV2oG0w2T_BqhcQ&usqp=CAU"
-              size="3.8em"></b-avatar>
+              size="3.8em"
+            ></b-avatar>
             <slot></slot>
-            <b-avatar v-if="recipe.glutenFree" variant="transparent"
+            <b-avatar
+              v-if="recipe.glutenFree"
+              variant="transparent"
               src="https://static.wixstatic.com/media/179523_cbcc13ff55ac449c84c366db1f767fd9~mv2.png/v1/fill/w_300,h_300,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/1772008_1.png"
-              size="4em"></b-avatar>
+              size="4em"
+            ></b-avatar>
           </div>
           <div class="mb-4">
-            <b-avatar variant="transparent"
+            <b-avatar
+              variant="transparent"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfF0qGfmgFsf0E2ycAhkP6gcuZ05AAutJUzw&usqp=CAU"
-              size="2em"></b-avatar>
+              size="2em"
+            ></b-avatar>
             {{ recipe.readyInMinutes }} minutes
-            <b-avatar variant="transparent" src="https://cdn-icons-png.flaticon.com/512/1046/1046874.png" size="2em">
+            <b-avatar
+              variant="transparent"
+              src="https://cdn-icons-png.flaticon.com/512/1046/1046874.png"
+              size="2em"
+            >
             </b-avatar>
             {{ recipe.servings }} people <br /><br />
-            <div v-if="!user_recipe">
-              <b-avatar variant="transparent"
+            <div v-if="!user_recipe && !family_recipe">
+              <b-avatar
+                variant="transparent"
                 src="https://banner2.cleanpng.com/20180616/ccf/kisspng-thumb-signal-computer-icons-like-icon-5b24ba2679a3b8.7819004915291336064983.jpg"
-                size="2em"></b-avatar>
+                size="2em"
+              ></b-avatar>
               {{ recipe.popularity }} likes
             </div>
-            <b-avatar v-if="watched" variant="transparent"
+            <b-avatar
+              v-if="watched"
+              variant="transparent"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-mIy8PoSlI5ATokKUgHZVXKVF9GTTgg7vCw&usqp=CAU"
-              size="2em" style="margin-left: auto"></b-avatar>
+              size="2em"
+              style="margin-left: auto"
+            ></b-avatar>
             <br />
+            <div v-if="family_recipe">
+              Its {{ recipe.recipeOwner }} special Recipe
+            </div>
           </div>
         </b-card>
       </div>
     </router-link>
     <div>
-      <b-button v-if="logged_in && !favorite && !user_recipe" :key="favorite" @click="addToFavorites"
-        style="text-decoration: none; position: relative; border-radius: 30px;" variant="danger">
+      <b-button
+        v-if="logged_in && !favorite && !user_recipe"
+        :key="favorite"
+        @click="addToFavorites"
+        style="text-decoration: none; position: relative; border-radius: 30px"
+        variant="danger"
+      >
         Add to favorites
       </b-button>
     </div>
@@ -65,7 +117,7 @@ export default {
       image_load: false,
       hovered: false,
       favorite: undefined,
-      watched: undefined
+      watched: undefined,
     };
   },
   props: {
@@ -85,7 +137,7 @@ export default {
       type: Boolean,
       required: false,
       default: false,
-    }
+    },
   },
   methods: {
     handleHovered(hovered) {
@@ -109,10 +161,10 @@ export default {
     }
     if (localStorage.getItem("userLastWatched")) {
       let lastWatched = JSON.parse(localStorage.getItem("userLastWatched"));
-      console.log(lastWatched)
+      
       for (let i = 0; i < lastWatched.length; i++) {
         if (lastWatched[i].id === this.recipe.id) {
-          console.log(this.recipe.id)
+          
           this.watched = true;
           return;
         }
@@ -134,7 +186,7 @@ export default {
   transition: all 0.4s ease-in-out;
 }
 
-.recipe-preview>.recipe-body {
+.recipe-preview > .recipe-body {
   width: 100%;
   height: 200px;
   position: relative;

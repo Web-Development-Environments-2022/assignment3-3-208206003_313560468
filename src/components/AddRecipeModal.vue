@@ -105,10 +105,16 @@
         v-for="ingredient in form.ingredients"
         :key="ingredient.key"
         invalid-feedback="*"
-        :state="Boolean(form.ingredients) && Boolean(ingredient.value ? ingredient.value.length <= 80: false)"
+        :state="
+          Boolean(form.ingredients) &&
+          Boolean(ingredient.value ? ingredient.value.length <= 80 : false)
+        "
       >
         <b-form-input
-          :state="Boolean(ingredient.value) && Boolean(ingredient.value ? ingredient.value.length <= 80: false)"
+          :state="
+            Boolean(ingredient.value) &&
+            Boolean(ingredient.value ? ingredient.value.length <= 80 : false)
+          "
           v-model="ingredient.value"
           required
           placeholder="Ingredient"
@@ -137,14 +143,18 @@
       <strong>Instructions:</strong>
       <br /><br />
       <b-form-group
-        :state="Boolean(form.instructions) && Boolean(instruction.value ? instruction.value.length <= 250 : false)"
+        :state="
+          Boolean(form.instructions) &&
+          Boolean(instruction.value ? instruction.value.length <= 250 : false)
+        "
         v-for="instruction in form.instructions"
         :key="instruction.key"
         invalid-feedback="*"
       >
         <b-form-input
           :state="
-            Boolean(instruction.value) && Boolean(instruction.value ? instruction.value.length <= 250 : false)
+            Boolean(instruction.value) &&
+            Boolean(instruction.value ? instruction.value.length <= 250 : false)
           "
           v-model="instruction.value"
           required
@@ -237,7 +247,7 @@ export default {
         this.instructionCount += 1;
       }
     },
-    handleSubmit() {
+    async handleSubmit() {
       try {
         const formData = new FormData();
         formData.append("title", this.form.title);
@@ -253,17 +263,17 @@ export default {
         for (let i = 0; i < this.form.instructions.length; i++) {
           formData.append("instructions[]", this.form.instructions[i].value);
         }
-        this.axios
+        await this.axios
           .post(this.$root.store.server_domain + "/users/add_recipe", formData)
           .then(
             function (result) {
-              console.log(result);
+              
             },
             function (error) {
               console.log(error);
             }
           );
-        this.$root.store.setUserRecipes();
+        await this.$root.store.setUserRecipes();
         this.$refs["my-modal"].hide();
       } catch (error) {
         console.log(error);

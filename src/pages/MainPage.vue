@@ -2,6 +2,7 @@
   <div class="container">
     <div class="neon-text">Liroey Recipes</div>
     <div>
+      <h5 >Explore this recipes</h5>
       <RecipePreviewList
         :random="true"
         :key="rerender"
@@ -19,8 +20,7 @@
         ></b-avatar>
       </div>
     </div>
-    <h1> Last Viewed Recipes:</h1>
-
+    <h5 class>Last watched recipes</h5>
     <div v-if="!$root.store.username" id="membershipRequest" style="text-align: left; margin-right: 50%;" >
       <h3> Only members can see that</h3>
       <b-button  style="max-width: 100px; background-color: blue;">
@@ -32,7 +32,7 @@
     
     </div>
     
-
+    
     <RecipePreviewList
       :class="{
         RandomRecipes: true,
@@ -135,7 +135,7 @@ $title: #a0721c;
 }
 header {
   border: 3px solid;
-  // height: 300px;
+
   position: relative;
 }
 
@@ -152,5 +152,11 @@ h3{
   font-family: 'Courier New', Courier, monospace;
   font-style:italic;
   font-weight: bolder;
+}
+h5 {
+  padding-top: 25px;
+  padding-left: 25px;
+  color: rgb(248, 248, 217);
+  font-family: Frank Ruhl Libre, Georgia;
 }
 </style>

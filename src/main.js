@@ -88,6 +88,7 @@ const shared_data = {
   lastSearch: localStorage.lastSearch,
   login(username) {
     localStorage.setItem("username", username);
+    localStorage.setItem("loginTime", new Date().toString());
     this.username = username;
     console.log("login", this.username);
   },
@@ -98,7 +99,7 @@ const shared_data = {
     localStorage.removeItem("userFavoriteRecipes");
     localStorage.removeItem("userLastWatched");
     localStorage.removeItem("userRecipes");
-    // localStorage.removeItem("userFavoriteRecipes");
+    localStorage.removeItem("loginTime");
     this.username = undefined;
   },
 
@@ -113,192 +114,127 @@ const shared_data = {
       const favoriteResponse = await axios.get(
         this.server_domain + "/users/favorites"
       );
-      console.log(favoriteResponse.data)
+      
       let favorites = favoriteResponse.data;
-      console.log(favorites);
-      // try {
-      //   let favorites = [{
-      //     vegetarian: false,
-      //     vegan: true,
-      //     glutenFree: true,
-      //     title: "Dandelion pesto",
-      //     readyInMinutes: 45,
-      //     servings: 4,
-      //     image: "https://spoonacular.com/recipeImages/641227-556x370.jpg",
-      //     id: 18,
-      //     popularity: 15,
-      //   },
-      //   {
-      //     vegetarian: false,
-      //     vegan: false,
-      //     glutenFree: true,
-      //     title: "Homemade Broccoli Cheddar Soup",
-      //     readyInMinutes: 45,
-      //     servings: 6,
-      //     image: "https://spoonacular.com/recipeImages/646930-556x370.jpg",
-      //     id: 100,
-      //     popularity: 20,
-      //   },
-      //   {
-      //     vegetarian: true,
-      //     vegan: false,
-      //     glutenFree: true,
-      //     title: "Tart Raspberry Sorbet with a Hint of Heat",
-      //     readyInMinutes: 45,
-      //     servings: 1,
-      //     image: "https://spoonacular.com/recipeImages/716198-556x370.jpg",
-      //     id: 14445,
-      //     popularity: 35,
-      //   },
-      //   ];
-        for (let i = 0; i < favorites.length; i++) {
-          favorites[i].favorite = true;
-        }
-        localStorage.setItem(
-          "userFavoriteRecipes",
-          JSON.stringify(favorites)
-        );
-      } catch (error) {
-        console.log(error);
+      for (let i = 0; i < favorites.length; i++) {
+        favorites[i].favorite = true;
       }
-    },
+      localStorage.setItem(
+        "userFavoriteRecipes",
+        JSON.stringify(favorites)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
   async setUserLastWatched() {
-      try {
-        const lastWatchedResponse = await axios.get(
-          this.server_domain + "/users/last_watched"
-        );
-        //   try{
-        //   let lastWatchedResponse= [{
-        //     vegetarian: false,
-        //     vegan: true,
-        //     glutenFree: true,
-        //     title: "Dandelion pesto",
-        //     readyInMinutes: 45,
-        //     servings: 4,
-        //     image: "https://spoonacular.com/recipeImages/641227-556x370.jpg",
-        //     id: 18,
-        //     popularity: 15,
-        //   },
-        //   {
-        //     vegetarian: false,
-        //     vegan: false,
-        //     glutenFree: true,
-        //     title: "Homemade Broccoli Cheddar Soup",
-        //     readyInMinutes: 45,
-        //     servings: 6,
-        //     image: "https://spoonacular.com/recipeImages/646930-556x370.jpg",
-        //     id: 100,
-        //     popularity: 20,
-        //   },
-        //   {
-        //     vegetarian: true,
-        //     vegan: false,
-        //     glutenFree: true,
-        //     title: "Tart Raspberry Sorbet with a Hint of Heat",
-        //     readyInMinutes: 45,
-        //     servings: 1,
-        //     image: "https://spoonacular.com/recipeImages/716198-556x370.jpg",
-        //     id: 14445,
-        //     popularity: 35,
-        //   },
-        // ];
-        localStorage.setItem(
-          "userLastWatched",
-          JSON.stringify(lastWatchedResponse.data.slice(0, 3))
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    try {
+      const lastWatchedResponse = await axios.get(
+        this.server_domain + "/users/last_watched"
+      );
+      localStorage.setItem(
+        "userLastWatched",
+        JSON.stringify(lastWatchedResponse.data.slice(0, 3))
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
   async setUserRecipes() {
-      try {
-        const userRecipesResponse = await axios.get(
-          this.server_domain + "/users/my_recipes"
-        );
-        localStorage.setItem(
-          "userRecipes",
-          JSON.stringify(userRecipesResponse.data)
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    try {
+      const userRecipesResponse = await axios.get(
+        this.server_domain + "/users/my_recipes"
+      );
+      localStorage.setItem(
+        "userRecipes",
+        JSON.stringify(userRecipesResponse.data)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
 
   async addToUserFavorite(recipe) {
+    try {
+      let favorites = [];
+      if (localStorage.getItem("userFavoriteRecipes") != undefined) {
+        favorites = JSON.parse(localStorage.getItem("userFavoriteRecipes"));
+      }
+
+      favorites.unshift(recipe);
+      localStorage.setItem("userFavoriteRecipes", JSON.stringify(favorites));
+      await axios.post(
+        this.server_domain + "/users/favorites",
+        {
+          recipe_id: recipe.id,
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  addToUserLastWatched(recipe) {
+    let lastWatched = [];
+    if (localStorage.getItem("userLastWatched") != undefined) {
+      lastWatched = JSON.parse(localStorage.getItem("userLastWatched"));
+    }
+    
+
+    for (var i = 0; i < lastWatched.length; i++) {
+      if (recipe.id === lastWatched[i].id) {
+        return;
+      }
+    }
+    lastWatched.unshift(recipe);
+    localStorage.setItem("userLastWatched", JSON.stringify(lastWatched.slice(0, 3)))
+  },
+};
+// Vue.prototype.$root.store = shared_data;
+let loginTime = localStorage.getItem("loginTime");
+if (loginTime != undefined) {
+  let last = new Date(loginTime);
+  let now = new Date();
+  let diff = Math.floor(last - now);
+  if(diff / (1000 * 60 * 60) > 12){
+    shared_data.logout();
+  }
+}
+
+new Vue({
+  router,
+  data() {
+    return {
+      store: shared_data,
+    };
+  },
+  async created() {
+    await this.setFamilyRecipes();
+  },
+  methods: {
+    toast(title, content, variant = null, append = false) {
+      this.$bvToast.toast(`${content}`, {
+        title: `${title}`,
+        toaster: "b-toaster-top-center",
+        variant: variant,
+        solid: true,
+        appendToast: append,
+        autoHideDelay: 3000,
+      });
+    },
+    async setFamilyRecipes() {
       try {
-        let favorites = [];
-        if (localStorage.getItem("userFavoriteRecipes") != undefined) {
-          favorites = JSON.parse(localStorage.getItem("userFavoriteRecipes"));
-        }
-
-        favorites.unshift(recipe);
-        localStorage.setItem("userFavoriteRecipes", JSON.stringify(favorites));
-        await axios.post(
-          this.server_domain + "/users/favorites",
-          {
-            recipe_id: recipe.id,
-          }
+        const response = await this.axios.get(
+          this.store.server_domain + "/recipes/my_family_recipes"
         );
-      } catch (error) {
-        console.log(error);
+        sessionStorage.setItem("familyRecipes", JSON.stringify(response.data))
+      } catch (err) {
+        console.log(err);
       }
-    },
-
-    addToUserLastWatched(recipe) {
-      let lastWatched = [];
-      if (localStorage.getItem("userLastWatched") != undefined) {
-        lastWatched = JSON.parse(localStorage.getItem("userLastWatched"));
-      }
-      // for (var i = 0; i < lastWatched.length; i++) {
-      //   if (recipe.id === lastWatched[i].id) {
-      //     return;
-      //   }
-      // }
-      lastWatched.unshift(recipe);
-      localStorage.setItem("userLastWatched", JSON.stringify(lastWatched.slice(0, 3)))
-    },
-
-
-
-    // updateLastSearch() {
-
-    // }
-  };
-  // Vue.prototype.$root.store = shared_data;
-
-  new Vue({
-    router,
-    data() {
-      return {
-        store: shared_data,
-      };
-    },
-    async created() {
-      await this.setFamilyRecipes();
-    },
-    methods: {
-      toast(title, content, variant = null, append = false) {
-        this.$bvToast.toast(`${content}`, {
-          title: `${title}`,
-          toaster: "b-toaster-top-center",
-          variant: variant,
-          solid: true,
-          appendToast: append,
-          autoHideDelay: 3000,
-        });
-      },
-      async setFamilyRecipes() {
-        try {
-          const response = await this.axios.get(
-            this.store.server_domain + "/users/my_family_recipes"
-          );
-          localStorage.setItem("familyRecipes", JSON.stringify(response.data))
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    },
-    render: (h) => h(App),
-  }).$mount("#app");
+    }
+  },
+  render: (h) => h(App),
+}).$mount("#app");

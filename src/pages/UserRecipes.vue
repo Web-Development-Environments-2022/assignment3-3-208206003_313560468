@@ -9,7 +9,7 @@
       <RecipePreviewList
         :inRecipes="userRecipes"
         :random="false"
-        :logged_in = "Boolean($root.store.username)"
+        :logged_in="Boolean($root.store.username)"
         class="center"
         :user_recipes="true"
       />
@@ -34,34 +34,17 @@ export default {
     try {
       if (localStorage.getItem("userRecipes") != undefined) {
         this.userRecipes = JSON.parse(localStorage.getItem("userRecipes"));
-        for(let i = 0; i < this.userRecipes.length; i++) {
-            // console.log(this.userRecipes[i].image);
-            // const imageResponse = await this.axios.get(this.$root.store.server_domain + "/users/download", {
-            //     params: {
-            //         image: this.userRecipes[i].image
-            //     }
-            // })
-            this.userRecipes[i].image = this.$root.store.server_domain + "/users/download?image=" + this.userRecipes[i].image;
+        for (let i = 0; i < this.userRecipes.length; i++) {
+          this.userRecipes[i].image =
+            this.$root.store.server_domain +
+            "/users/download?image=" +
+            this.userRecipes[i].image;
         }
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  },
 };
 </script>
-
-<!-- <style lang="scss" scoped>
-.RandomRecipes {
-  margin: 10px 0 10px;
-}
-.blur {
-  -webkit-filter: blur(5px);
-  /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
-}
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
-}
-</style> -->
+<style></style>

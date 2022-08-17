@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h1 v-if="family_recipe">Best for {{ recipe.when }}</h1>
     <b-card-group deck style="text-align: center">
       <b-card
         :img-src="recipe.image"
@@ -87,6 +88,9 @@
             ></b-avatar>
             <h1>{{ recipe.popularity }} likes</h1>
           </b-row>
+          <b-row v-if="family_recipe">
+            <h1>Owner: {{ recipe.recipeOwner }}</h1>
+          </b-row>
           <div>
             <b-button
               v-if="logged_in && !recipe.favorite && !user_recipe"
@@ -168,6 +172,19 @@
         <!-- <b-link href="#" class="card-link">Another link</b-link> -->
       </b-card>
     </b-card-group>
+    <div v-if="family_recipe">
+      <h1>Want to see more ? Click it!</h1>
+      <b-card
+        v-if="Boolean(image.src)"
+        overlay
+        :key="image.id"
+        :img-src="image.src"
+        img-alt="Card Image"
+        @click="switchImages"
+        class="image"
+        style= "max-width: 90%; max-height: 30%; "
+      />
+    </div>
   </div>
 </template> 
 
@@ -176,6 +193,8 @@ export default {
   data() {
     return {
       favorite: undefined,
+      index: 0,
+      image: undefined,
     };
   },
   props: {
@@ -199,21 +218,18 @@ export default {
       default: false,
     },
   },
-  // created() {
-  //   if (!this.user_recipe && localStorage.getItem("userFavoriteRecipes")) {
-  //     let favorites = JSON.parse(localStorage.getItem("userFavoriteRecipes"));
-  //     for (let i = 0; i < favorites.length; i++) {
-  //       if (favorites[i].id === this.recipe.id) {
-  //         this.favorite = true;
-  //       }
-  //     }
-  //   }
-  // },
+  created() {
+    this.switchImages();
+  },
   methods: {
     async addToFavorites() {
       this.recipe.favorite = true;
       this.favorite = true;
       await this.$root.store.addToUserFavorite(this.recipe);
+    },
+    async switchImages() {
+      this.image = this.recipe.images[this.index];
+      this.index = (this.index + 1) % this.recipe.images.length;
     },
   },
 };

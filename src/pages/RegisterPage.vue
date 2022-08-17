@@ -1,10 +1,10 @@
 <template>
 <div>
-    <h1 class="title" v-if="!$root.store.username">Registration Page </h1>
   <div v-if="$root.store.username">
     <NotFound></NotFound>
   </div>
   <div v-else class="container">
+    <h1 class="title" v-if="!$root.store.username" style= "text-align: left;">Registration Page </h1>
     <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
       <b-form-group
         id="input-group-username"
@@ -19,13 +19,13 @@
           :state="validateState('username')"
         ></b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.username.required">
-          Username is required
+          <p class="errorFeedBack"> Username is required </p>
         </b-form-invalid-feedback>
         <b-form-invalid-feedback v-else-if="!$v.form.username.length">
           Username length should be between 3-8 characters long
         </b-form-invalid-feedback>
         <b-form-invalid-feedback v-if="!$v.form.username.alpha">
-          Username alpha
+          Only alphabetic charachters are allowed
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -48,7 +48,7 @@
           First name length should be between 3-40 characters long
         </b-form-invalid-feedback>
         <b-form-invalid-feedback v-if="!$v.form.firstName.alpha">
-          First name alpha
+          Only alphabetic charachters are allowed
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -125,7 +125,7 @@
         <b-form-invalid-feedback v-if="!$v.form.password.required">
           Password is required
         </b-form-invalid-feedback>
-        <b-form-text v-else-if="$v.form.password.$error" text-variant="info">
+        <b-form-text v-else-if="$v.form.password.$error" text-variant="danger" style= "font-weight:bolder;">
           Your password should be <strong>strong</strong>. <br />
           For that, your password should be also:
         </b-form-text>
@@ -134,6 +134,12 @@
         >
           Have length between 5-10 characters long
         </b-form-invalid-feedback>
+        <b-form-invalid-feedback
+          v-if="!$v.form.password.valid"
+        >
+          Must contain at least one number and one special charachter
+        </b-form-invalid-feedback>
+
       </b-form-group>
 
       <b-form-group
@@ -164,10 +170,10 @@
         
         style="width: 250px; background-color: green;"
         class="ml-5 w-75"
-        >Register</b-button
-      >
+        >Register</b-button>
+
     <div id="registerRequest" style="text-align: center; padding-left: 100px; padding-top: 5px;" >
-      <h2 style="color:white"> Do not have an account yet?</h2>
+      <h2 style="color:white"> Has an account ?</h2>
       <b-button  style="max-width: 100px; background-color: blue;">
         <router-link to="Login" style="color: white;"> Login</router-link>
       </b-button>
@@ -235,6 +241,11 @@ export default {
       password: {
         required,
         length: (p) => minLength(5)(p) && maxLength(10)(p),
+        validate:function(check){
+          const containsNum = /[0-9]/.test(check);
+          const containsSpecial = /[?=.*[*.!@$%^&(){}[]:;<>,.?~_+-=|\]/.test(check);
+          return containsNum,containsSpecial;
+        }
       },
       confirmedPassword: {
         required,
@@ -257,9 +268,9 @@ export default {
     },
   },
   mounted() {
-    // console.log("mounted");
+
     this.countries.push(...countries);
-    // console.log($v);
+   
   },
   methods: {
     validateState(param) {
@@ -280,19 +291,19 @@ export default {
           }
         );
         this.$router.push("/login");
-        // console.log(response);
+        
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
     },
     onRegister() {
-      // console.log("register method called");
+      
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("register method go");
+      
       this.Register();
     },
     onReset() {
@@ -325,4 +336,8 @@ h1 {
   font-family: Frank Ruhl Libre, Georgia;
 
 }
+// .errorFeedBack {
+//   background-color: rgba($color: #f4eeee, $alpha: 0.7);
+// }
+
 </style>

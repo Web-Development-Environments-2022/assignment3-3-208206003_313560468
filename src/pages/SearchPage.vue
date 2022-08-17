@@ -21,9 +21,6 @@
           </b-form-input>
 
           <template #append>
-            <!-- <b-form-select class="select" v-model="form.cuisine" multiple :options="cuisines" variant="dark"></b-form-select>
-            <b-form-select class="select" v-model="form.diet" multiple :options="diet"></b-form-select>
-            <b-form-select class="select" v-model="form.intolerance" multiple :options="intolerance"></b-form-select> -->
             <b-button type="submit" class="mx-auto w-100" variant="danger"
               >Search</b-button
             >
@@ -209,13 +206,13 @@ export default {
       }
     },
     onSearch() {
-      // console.log("login method called");
+      
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("login method go");
+     
 
       this.search();
     },

@@ -1,11 +1,10 @@
 <template>
   <div>
-    <h1 class="title" v-if="!$root.store.username">Login Page </h1>
     <div v-if="$root.store.username">
       <NotFound></NotFound>
     </div>
     <div v-else class="container">
-
+      <h1 class="title" v-if="!$root.store.username">Login Page </h1>
       <b-form @submit.prevent="onLogin">
         <b-form-group id="input-group-Username" label-cols-sm="3" label="Username:" label-for="Username" >
           
@@ -82,8 +81,8 @@ export default {
             password: this.form.password,
           }
         );
-        // console.log(response);
-        // this.$root.loggedIn = true;
+        
+     
         console.log(this.$root.store.login);
 
         await this.$root.store.produceUserData();
@@ -95,13 +94,13 @@ export default {
       }
     },
     onLogin() {
-      // console.log("login method called");
+     
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("login method go");
+      
 
       this.Login();
     },
